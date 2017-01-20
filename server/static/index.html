@@ -6,8 +6,7 @@
 </head>
 <body>
 
-	<button>
-	</button>
+	<button id="button">Click me</button>
 	<script>
 		$(document).ready(function() {
            
@@ -16,6 +15,15 @@
             socket.on('connect', function() {
                 console.log("connection to socket established!");
         	});
+
+        	$("#button").click(function() {
+        		myFunction();
+        	});
+        	var myFunction = function() {
+        		vari = "jotain shittii lähtee clientille";
+        		socket.emit('spawn new powur', vari);
+        	};
+        	
        	});
     </script>
 

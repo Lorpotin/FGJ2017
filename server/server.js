@@ -51,8 +51,8 @@ function onClientDisconnect() {
 
 };
 
-function spawnNewPowur() {
-
+function spawnNewPowur(data) {
+	console.log(data);
 }
 
 var onNewPlayer = function(data){
