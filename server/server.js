@@ -7,9 +7,10 @@ var socket, players;
 
 var PORT = 3000;
 
-players = [];
+
 
 function init()  {
+	players = [];
     //Set socket server to listen to a port
     socket = io.listen(8000);
    	setEventHandlers();
@@ -53,6 +54,23 @@ function onClientDisconnect() {
 function spawnNewPowur() {
 
 }
+
+var onNewPlayer = function(data){
+    //This creates a new player instance using position data sent by the connected client. The identification number is stored for future reference.
+    var newPlayer = new Player(data.x, data.y);
+    newPlayer.id = this.id;
+    //Now the new player is created you can send it to the other connected players
+    //this.broadcast.emit sends a message to ALL clients, while this.emit sends a message to only a certain client
+    this.broadcast.emit("new player", {id: newPlayer.id, x: newPlayer.getX(), y: newPlayer.getY()});
+    //Now we need to send the existing players to the new player by
+    var i, existingPlayer;
+    for (i = 0; i < players.length; i++)
+    {
+        existingPlayer = players[i];
+        this.emit("new player", {id: existingPlayer.id, x: existingPlayer.getX(), y: existingPlayer.getY()});
+    };
+    players.push(newPlayer);
+};
 
 var playerById = function(id)  {
     var i;
