@@ -3,6 +3,8 @@ var util = require("util"),
 
 var socket, players;
 
+players = [];
+
 function init() 
 {
     //Set socket server to listen to a port
