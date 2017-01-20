@@ -1,7 +1,8 @@
 var Player = function()
 {
-    var id;
+    var id, name;
     return {
+        name: name,
         id: id
     }
 };

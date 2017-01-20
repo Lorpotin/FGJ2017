@@ -57,7 +57,7 @@ function spawnNewPowur(data) {
 	socket.emit("newPowerUp", data);
 }
 
-var onNewPlayer = function(data){
+var onNewPlayer = function(data) {
     players.push(newPlayer);
 };
 
