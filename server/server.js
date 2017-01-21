@@ -64,7 +64,6 @@ function onClientDisconnect(client) {
     else if(userType === "GAME") {
         spliceGameUser(removePlayer);
     }
-	
 
 };
 
@@ -88,19 +87,22 @@ var playerById = function(id, userType)  {
     if(userType === "WEB") {
         for (i = 0; i < WEB_SOCKETS.length; i++)
         {
-            if (WEB_SCOKETS[i].id == id) 
+            if (WEB_SOCKETS[i] === id) 
                 return WEB_SOCKETS[i];
+
         };
     }
     else if(userType === "GAME") {
         for (i = 0; i < GAME_SOCKETS.length; i++)
         {
-            if (GAME_SOCKETS[i].id == id) 
+            if (GAME_SOCKETS[i] === id) 
                 return GAME_SOCKETS[i];
         };
     }
+    else
+        return false;
     
-    return false;
+    
 };
 app.use(express.static('static'));
 
