@@ -98,3 +98,6 @@ ul {
   font-family: Oswald;
 }
 
+canvas {
+	margin-top: 25px;
+}
