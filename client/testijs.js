@@ -1,6 +1,7 @@
 
 $(document).on("click", "#button", function() 
 {
+	console.log("yes");
     emitMapXY("15", "25");
 });
 
@@ -30,7 +31,8 @@ function emitMapXY(x,y) {
 		x: x,
 		y: y
 	}
-	socket.emit("drawMap", data);
+	console.log(data);
+	socket.emit("draw map", data);
 }
 
 function onSocketConnected() {

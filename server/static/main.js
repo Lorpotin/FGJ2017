@@ -37,10 +37,7 @@ $(document).ready(function() {
         socket.on('connect', function() {
             console.log("connection to socket established!");
         });
-        socket.on('drawMap', function() {
-            console.log("Map draw yes.");
-            drawMap();
-        });
+        socket.on('drawMap', drawMap);
 
         $(".btn").click(function() {
             myFunction($(this).attr("powerup"));
@@ -48,7 +45,8 @@ $(document).ready(function() {
     }
 
     var drawMap = function(data) {
-        console.log("yes");
+        console.log(data);
+
     }
 
     var myFunction = function(powerup) {
