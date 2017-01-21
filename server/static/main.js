@@ -1,6 +1,11 @@
 $(document).ready(function() {
     
     var username;
+    var drawPoints = {
+        "topWall" : [],
+        "player1" : [],
+        "bottomWall" : [],
+    };
     $loginPage = $('.login.page'); // The login page
     $gamePage = $('.game.page');
 
