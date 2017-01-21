@@ -23,7 +23,7 @@ Player.prototype.constructor = Player;
  * Automatically called by World.update
  **/
 
-var movementSpeed = 100;
+var movementSpeed = 500;
 
 Player.prototype.update = function() {
     player.body.velocity.y = 0;
