@@ -62,11 +62,12 @@ Player.prototype.update = function() {
     }
  
 
-    if (cursors.up.isDown)
+    if (pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y) > 0.1)
     {
         //  Move down
+        console.log("alas"); 
         this.startedGame = true;
-        this.y_move -= 0.75;
+        this.y_move += pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y);
         if(this.y_move < -10){
             this.y_move = -10;
         }
@@ -79,11 +80,12 @@ Player.prototype.update = function() {
     {
         //  Move up
     }
-    else if (cursors.down.isDown)
+    else if (pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y) < -0.1)
     {
         //  Move up
+        console.log("ylös"); 
         this.startedGame = true;
-         this.y_move += 0.75;
+         this.y_move += pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y);
          if(this.y_move > 10){
             this.y_move = 10;
         }
