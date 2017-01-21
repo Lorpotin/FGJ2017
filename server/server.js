@@ -10,9 +10,8 @@ var WEB_SOCKETS, GAME_SOCKETS;
 
 var darkEvent, xEvent, yEvent;
 var eventStatus;
-var count;
+var count = 5;
 var counter;
-
 
 function init()  {
 	WEB_SOCKETS = [];
@@ -81,10 +80,11 @@ function spliceGameUser(data) {
 }
 
 function spawnNewPowur(data) {
-	console.log(data);
     if(!isEventActive()) {
-        socket.emit("newPowerUp", data);
+        console.log(data);
         eventStatus = true;
+        socket.emit("newPowerUp", data);
+        count = 5;
         calculateEventTimer();
     }
     else {
@@ -97,11 +97,11 @@ function spawnNewPowur(data) {
 }
 
 function calculateEventTimer(data) {
-    var counter = setInterval(timer, 1000);
+    counter = setInterval(timer, 1000);
 }
 
 function timer() {
-    count =-1;
+    count -= 1;
     if(count <= 0) {
         clearInterval(counter);
         eventStatus = false;
@@ -109,12 +109,10 @@ function timer() {
     }
 }
 function drawMap(data) {
-    console.log(data);
     socket.emit("drawMap", data);
 }
 
 function processImage(data) {
-    console.log('image sent ' + data.substring(1,20));
     data = {
         image : data
     }
