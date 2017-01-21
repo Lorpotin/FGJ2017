@@ -12,7 +12,8 @@ var game = new Phaser.Game(GAME_HEIGHT,GAME_WIDTH, Phaser.CANVAS, '',{ preload: 
 var updateTicker = 0;
 var varTicker = 0;
 var updateCycle = 1;
-var graphics = null;
+var mapLower = null;
+var mapUpper = null;
 
 var lowerLevelVar = 0
 
@@ -48,7 +49,8 @@ function create() {
     highScoreListText.push(game.add.text(250, 48, "3. 0",{fill:"white", font: "20px Arial Black"}));
     highScoreListText.push(game.add.text(250, 64, "4. 0",{fill:"white", font: "20px Arial Black"}));
     highScoreListText.push(game.add.text(250, 80, "5. 0",{fill:"white", font: "20px Arial Black"}));*/
-    graphics = game.add.graphics(0, GAME_HEIGHT / 2);
+    mapLower = game.add.graphics(0,0);
+    mapUpper = game.add.graphics(0,0);
 
     // set a fill and line style
    
@@ -58,19 +60,35 @@ function create() {
 
 function update() {
 	updateTicker++;
-
-   
-    //graphics.beginFill();
-
-    graphics.clear();
-    graphics.lineStyle(3, 0xffffff, 1);
-	graphics.moveTo(0, GAME_HEIGHT / 2);
+    /* lower map */
+  	mapLower.clear();
+	mapLower.lineStyle(3, 0xffffff, 1);
+    mapLower.beginFill(0xffffff);
+	mapLower.moveTo(0, 800);
+ 	for(var x = 0; x < GAME_WIDTH+300; x++){
+  		mapLower.lineTo(x,500 + (200 * Math.sin(Math.PI * (((x/40 + (updateTicker+60)))/60))));
+ 	}
+	mapLower.lineTo( GAME_WIDTH+300 , 800);
+    mapLower.endFill();
+	//graphics.moveTo(0, 400);
     
  // * Math.sin(Math.PI * updateTicker/60)
- 	for(var x = 0; x < GAME_WIDTH; x++){
+ /*	for(var x = 0; x < GAME_WIDTH+300; x++){
   		graphics.lineTo(x, -200 * Math.sin(Math.PI * ((x/40 + updateTicker)/60)));
  	}
-    //graphics.endFill();
+	graphics.lineTo( GAME_WIDTH+300, 800 );
+
+
+	 /* upper map */
+	mapUpper.clear();
+	mapUpper.lineStyle(3, 0xffffff, 1);
+    mapUpper.beginFill(0xffffff);
+	mapUpper.moveTo(0, 0);
+ 	for(var x = 0; x < GAME_WIDTH+300; x++){
+  		mapUpper.lineTo(x,100 + (200 * Math.sin(Math.PI * ((1-(x/40 + updateTicker))/60))));
+ 	}
+	mapUpper.lineTo( GAME_WIDTH+300, 0);
+    mapUpper.endFill();
 }
 
 
