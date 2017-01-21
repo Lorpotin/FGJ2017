@@ -44,6 +44,7 @@ function onSocketConnection(client) {
     client.on("spawn new powur", spawnNewPowur);
     client.on("draw map", drawMap);
     client.on("image", processImage);
+    client.on("playerData", playerData);
 };
 
 function onClientDisconnect(client) {
@@ -94,6 +95,10 @@ function spawnNewPowur(data) {
         socket.emit("eventActive", data);
     }
 	
+}
+
+function playerData(data) {
+    socket.emit("playerPositions", data);
 }
 
 function calculateEventTimer(data) {
