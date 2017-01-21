@@ -1,26 +1,46 @@
 $(document).ready(function() {
     
-    socket = io("localhost:8000", { query: "user=WEB" });
+    var username;
+    $loginPage = $('.login.page'); // The login page
+    $gamePage = $('.game.page');
 
-    result = {
-        msg: "Jotain shittii",
-        nick : ""
-    };
-
-    socket.on('connect', function() {
-        console.log("connection to socket established!");
+    $(document).on("click", "#playBtn", function() 
+    {
+        setUsername();
     });
 
-    $("#button").click(function() {
-        myFunction();
-    });
-    var myFunction = function() {
-        if($("input").val().length < 3 || $("input").val().length > 8) {
-            alert("give nickname of 3-8 chars");
-            return;
+    function setUsername () 
+    {
+        username = $('.usernameInput').val();
+
+        // If the username is valid
+        if (username) 
+        {
+            $loginPage.fadeOut();
+            // Tell the server your username
+            $gamePage.show();
         }
-        result.nick = $('input').val();
-        vari = "jotain shittii lähtee clientille";
+    }
+
+    function init(username) {
+        socket = io("localhost:8000", { query: "user=WEB" });
+
+        result = {
+            msg: "Jotain shittii",
+            nick: username
+        };
+
+        socket.on('connect', function() {
+            console.log("connection to socket established!");
+        });
+
+        $("#button").click(function() {
+            myFunction();
+        });
+    }
+
+
+    var myFunction = function() {
         socket.emit('spawn new powur', result);
     };
     
