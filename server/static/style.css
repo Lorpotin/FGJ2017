@@ -101,3 +101,20 @@ ul {
 canvas {
 	margin-top: 20px;
 }
+
+#homovittu {
+	margin-left: 5px;
+	margin-top: 5px;
+}
+
+.control-label {
+	margin-left: 5px;
+}
+
+#inputImage {
+	margin-top: 5px;
+}
+
+#header2 {
+	margin-left: 25px;
+}

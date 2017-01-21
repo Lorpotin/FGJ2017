@@ -108,6 +108,7 @@ $(document).ready(function() {
     }
 
     function init(username) {
+        $("#header2").text("Player: "+username);
         socket = io("https://fgj17-tatsiki.c9users.io", { query: "user=WEB" });
 
         result = {
@@ -122,6 +123,7 @@ $(document).ready(function() {
         });
         socket.on('drawMap', drawMap);
         socket.on('gameDisconnected', handleGameDisconnect);
+        socket.on('eventActive', eventActive);
 
 
         $(".btn").click(function() {
@@ -158,7 +160,7 @@ $(document).ready(function() {
             gameLive = true;
         }
         else {
-            $("#header").text("Game live!");
+            $("#header").text("Game live!  ");
         }
         
     }
@@ -173,6 +175,10 @@ $(document).ready(function() {
         result.msg = msg;
         socket.emit('spawn new powur', result);
     };
+
+    var eventActive = function(data) {
+        console.log(data);
+    }
 
 
     
