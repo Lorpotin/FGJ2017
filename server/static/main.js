@@ -127,12 +127,26 @@ $(document).ready(function() {
         });
         socket.on('drawMap', drawMap);
 
+
         $(".btn").click(function() {
-            myFunction($(this).attr("powerup"));
+            spawnEvent($(this).attr("powerup"), $("#homovittu").val());
         });
 
          if(gameLive === false) 
             $("#header").text("Game offline");
+
+        $('#inputImage').on('change', function(e){
+            console.log("tiäl ollaa");
+            //Get the first (and only one) file element
+            //that is included in the original event
+            var file = e.originalEvent.target.files[0],
+                reader = new FileReader();
+            //When the file has been read...
+            reader.onload = function(evt){
+                socket.emit('image', evt.target.result);
+            };
+            reader.readAsDataURL(file);  
+        });
 
 
     }
@@ -154,8 +168,9 @@ $(document).ready(function() {
         
     }
 
-    var myFunction = function(powerup) {
+    var spawnEvent = function(powerup, msg) {
         result.powerup = powerup;
+        result.msg = msg;
         console.log(result);
         socket.emit('spawn new powur', result);
     };
