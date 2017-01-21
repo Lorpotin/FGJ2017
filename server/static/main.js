@@ -15,6 +15,7 @@ $(document).ready(function() {
     var tickerSpeed = 1;
     var isCurveVarTarget = 1;
     var isCurveSizeTarget = 0;
+    var playerY = 0;
 
     var gameLoop = function(){
       draw();
@@ -81,8 +82,10 @@ $(document).ready(function() {
         ctx.lineTo(x,y_pos);
       }
       ctx.lineTo(1024+300 , 800);
-
       ctx.closePath();
+
+      ctx.fillStyle = "#FFFFFF";
+      ctx.fillRect(10,10,10,10);
      }
 
  
@@ -167,7 +170,6 @@ $(document).ready(function() {
     }
 
     var drawPlayer = function(data) {
-        console.log(data);
     }
 
     var handleGameDisconnect = function() {
