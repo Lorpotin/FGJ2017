@@ -15,11 +15,6 @@ var isDarknessTarget = 0;
 var upperLevelYCoord = 0;
 var lowerLevelYCoord = 0;
 
-$(document).on("click", "#button", function() 
-{
-	isCurveVarTarget = 0;
-});
-
 function addDarknessMask(){
 	mapUpper.mask = darknessMask;
     mapLower.mask = darknessMask;
@@ -101,21 +96,21 @@ function updateLevel(){
 	mapUpper.clear();
     mapUpper.beginFill(0xF4A460);
 	mapUpper.moveTo(0, 0);
- 	for(var x = 0; x < GAME_WIDTH+300; x++){
+ 	for(var x = 0; x < GAME_WIDTH+1000; x++){
  		var y_pos = (200 + (100 * isCurveSize) + (200 * Math.sin(Math.PI * ((1-(x/40 + updateTicker))/60)))*isCurveVar);
  		if(player && x === player.x){
  			upperLevelYCoord = y_pos;
  		}
   		mapUpper.lineTo(x,y_pos);
  	}
-	mapUpper.lineTo( GAME_WIDTH+300, 0);
+	mapUpper.lineTo( GAME_WIDTH+1000, 0);
     mapUpper.endFill();
 
     /* lower map */
   	mapLower.clear();
     mapLower.beginFill(0xF4A460);
-	mapLower.moveTo(0, 800);
- 	for(var x = 0; x < GAME_WIDTH+300; x++){
+	mapLower.moveTo(0, 1200);
+ 	for(var x = 0; x < GAME_WIDTH+1000; x++){
 	mapLower.beginFill(0xF4A460);
  		var y_pos = (550 - (100 * isCurveSize) + (200 * Math.sin(Math.PI * (((x/40 + (updateTicker+60)))/60)))*isCurveVar);
  		if(player && x === player.x){
@@ -124,7 +119,7 @@ function updateLevel(){
  		}
   		mapLower.lineTo(x,y_pos);
  	}
-	mapLower.lineTo( GAME_WIDTH+300 , 800);
+	mapLower.lineTo( GAME_WIDTH+1000 , 1200);
     mapLower.endFill();
 	
 	darknessMask.clear();
@@ -144,8 +139,12 @@ function addTimeEvents(){
 	game.time.events.loop(2000, randomizeNewCurveSize.bind(this));
 	game.time.events.loop(40, increaseCurveSizeUntil.bind(this));
 
-	game.time.events.loop(4000, randomizeNewDarkness.bind(this));
-	game.time.events.loop(40, setDarknessMask.bind(this));
+//	game.time.events.loop(4000, randomizeNewDarkness.bind(this));
+//	game.time.events.loop(40, setDarknessMask.bind(this));
 
-	game.time.events.loop(500, sendUpdates.bind(this));
+	game.time.events.loop(2000, sendUpdates.bind(this));
+}
+
+function addImageObstacle(){
+	this.game.load.image('hueso', imageData);
 }

@@ -1,6 +1,6 @@
 
-var GAME_HEIGHT = 1024;
-var GAME_WIDTH  = 768;
+var GAME_HEIGHT = 1920;
+var GAME_WIDTH  = 1080;
 var player = null;
 var game = new Phaser.Game(GAME_HEIGHT,GAME_WIDTH, Phaser.CANVAS, '',{preload: preload, create: create, update: update});
 
@@ -22,6 +22,8 @@ var starttime = null;
 var scoreText;
 var highscoreText;
 
+var messageArray = [];
+
 function preload() {
 }
 
@@ -39,11 +41,20 @@ function create() {
 
     darknessMask = game.add.graphics(0,0);
     darknessMask.alpha = 0;
+ 	game.load.onFileComplete.add(fileComplete, this);
+   
     game.input.gamepad.start();
 
     // To listen to buttons from a specific pad listen directly on that pad game.input.gamepad.padX, where X = pad 1-4
     pad1 = game.input.gamepad.pad1;
+    socket.on("newPowerUp", onNewPowerUp);
+    socket.on("image", onNewObstacle);
+	game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+	game.stage.disableVisibilityChange = true;
+
 }
+
+
 
 function update() {
 	updateTicker+=tickerSpeed;
