@@ -21,6 +21,7 @@ var highscore = 0;
 var starttime = null;
 var scoreText;
 var highscoreText;
+var startgameText;
 
 function preload() {
 }
@@ -28,12 +29,12 @@ function preload() {
 function create() {
 	addTimeEvents();
 
-	socket = io.connect("https://fgj17-tatsiki.c9users.io", { query: "user=GAME" });
+	// socket = io.connect("https://fgj17-tatsiki.c9users.io", { query: "user=GAME" });
     mapLower = game.add.graphics(0,0);
     mapUpper = game.add.graphics(0,0);
     scoreText = game.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#FFF' });
     highscoreText = game.add.text(16, 48, 'Highscore: 0', { fontSize: '32px', fill: '#FFF' });
-    
+    startgameText = game.add.text(300, 500, 'Move up or down to start the game', { fontSize: '32px', fill: '#FFF' });
 	player = new Player(game,512,384);
     game.add.existing(player);
 
@@ -56,7 +57,7 @@ function sendUpdates(){
 	datajson.curveSize = isCurveSizeTarget;
 	datajson.curveFrequency = isCurveVarTarget;
 	datajson.updateTicker = updateTicker;
-	socket.emit("draw map", datajson);
+	// socket.emit("draw map", datajson);
 }
 
 
