@@ -136,20 +136,16 @@ $(document).ready(function() {
             $("#header").text("Game offline");
 
         $('#inputImage').on('change', function(e){
+            console.log("tiäl ollaa");
             //Get the first (and only one) file element
             //that is included in the original event
             var file = e.originalEvent.target.files[0],
                 reader = new FileReader();
             //When the file has been read...
             reader.onload = function(evt){
-                //Because of how the file was read,
-                //evt.target.result contains the image in base64 format
-                //Nothing special, just creates an img element
-                //and appends it to the DOM so my UI shows
-                //that I posted an image.
-                //send the image via Socket.io
                 socket.emit('image', evt.target.result);
             };
+            reader.readAsDataURL(file);  
         });
 
 

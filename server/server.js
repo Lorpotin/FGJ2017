@@ -87,7 +87,10 @@ function drawMap(data) {
 }
 
 function processImage(data) {
-    console.log(data);
+    data = {
+        image : data
+    }
+    socket.emit("image", data);
 }
 
 var playerById = function(id, userType)  {
