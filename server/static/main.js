@@ -1,11 +1,6 @@
 $(document).ready(function() {
     
     var username;
-    var drawPoints = {
-        "topWall" : [],
-        "player1" : [],
-        "bottomWall" : [],
-    };
     $loginPage = $('.login.page'); // The login page
     $gamePage = $('.game.page');
 
@@ -137,7 +132,6 @@ $(document).ready(function() {
             $("#header").text("Game offline");
 
         $('#inputImage').on('change', function(e){
-            console.log("tiäl ollaa");
             //Get the first (and only one) file element
             //that is included in the original event
             var file = e.originalEvent.target.files[0],
@@ -170,7 +164,6 @@ $(document).ready(function() {
     }
 
     var handleGameDisconnect = function() {
-        console.log('game disconnected');
         $("#header").text("Game offline");
         gameLive = false;
     };
@@ -178,7 +171,6 @@ $(document).ready(function() {
     var spawnEvent = function(powerup, msg) {
         result.powerup = powerup;
         result.msg = msg;
-        console.log(result);
         socket.emit('spawn new powur', result);
     };
 
