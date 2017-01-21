@@ -23,7 +23,7 @@ $(document).ready(function() {
     }
 
     function init(username) {
-        socket = io("localhost:8000", { query: "user=WEB" });
+        socket = io("https://fgj17-tatsiki.c9users.io", { query: "user=WEB" });
 
         result = {
             msg: "Jotain shittii",
@@ -34,8 +34,8 @@ $(document).ready(function() {
             console.log("connection to socket established!");
         });
 
-        $("#button").click(function() {
-            myFunction();
+        $(".btn").click(function() {
+            myFunction($(this).attr("powerup"));
         });
     }
 
