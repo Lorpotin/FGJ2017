@@ -1,21 +1,15 @@
 Player = function (game, x, y) {
 
-    Phaser.Sprite.call(this, game, x, y, 'player');
+    Phaser.Graphics.call(this, game, x, y);
 
-    // anim = this.animations.add('drive',[0,1,2,3],25);
-    // anim.play(25,true);
-    // this.body.gravity.y = 0;
-    //this.body.checkCollision.up = false;
-    //this.body.checkCollision.left = false;
-    //this.body.checkCollision.right = false;
-    game.physics.enable(this, Phaser.Physics.ARCADE);
-    
-    this.body.collideWorldBounds = true;
-    this.body.velocity.x = 0;
-    this.body.x = 512;
+    cursors = game.input.keyboard.createCursorKeys();
+    this.prevYCoordinates = [];
+    this.y_move = 0;
+    this.prevSpotY = 0;
+
 };
 
-Player.prototype = Object.create(Phaser.Sprite.prototype);
+Player.prototype = Object.create(Phaser.Graphics.prototype);
 Player.prototype.constructor = Player;
 
 
@@ -25,29 +19,33 @@ Player.prototype.constructor = Player;
 
 var movementSpeed = 500;
 
+
+
 Player.prototype.update = function() {
-    player.body.velocity.y = 0;
-    player.body.x = 512;
-    cursors = game.input.keyboard.createCursorKeys();
+
+    this.clear();
+    this.lineStyle(10, 0xFF0000, 0.2);
+ 
+    for(var x = 0; x < 100; x++){
+        this.lineTo(x,100 + (200 * (this.y_move * (x/100)) ));
+    }
 
     if (cursors.up.isDown)
     {
         //  Move down
-        player.body.velocity.y = -1 *  movementSpeed;
+        this.y_move -= 0.1;
     }
     else if (cursors.left.isDown)
     {
         //  Move up
-        player.body.velocity.y = -1 *  movementSpeed;
     }
     else if (cursors.right.isDown)
     {
         //  Move up
-        player.body.velocity.y = movementSpeed;
     }
     else if (cursors.down.isDown)
     {
         //  Move up
-        player.body.velocity.y = movementSpeed;
+        this.y_move += 0.1;
     }
 };

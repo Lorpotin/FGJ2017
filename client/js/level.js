@@ -89,7 +89,8 @@ function randomizeNewDarkness(){
 		removeDarknessMask();
 	}
 }
-
+var testcollspot1 = null;
+var testcollspot2 = null;
 function updateLevel(){
 	 /* upper map */
 	mapUpper.clear();
@@ -110,8 +111,10 @@ function updateLevel(){
     mapLower.beginFill(0xF4A460);
 	mapLower.moveTo(0, 800);
  	for(var x = 0; x < GAME_WIDTH+300; x++){
+	mapLower.beginFill(0xF4A460);
  		var y_pos = (550 - (100 * isCurveSize) + (200 * Math.sin(Math.PI * (((x/40 + (updateTicker+60)))/60)))*isCurveVar);
  		if(player && x === player.x){
+ 		
  			lowerLevelYCoord = y_pos;
  		}
   		mapLower.lineTo(x,y_pos);
@@ -135,7 +138,6 @@ function addTimeEvents(){
 
 	game.time.events.loop(2000, randomizeNewCurveSize.bind(this));
 	game.time.events.loop(40, increaseCurveSizeUntil.bind(this));
-
 
 	game.time.events.loop(4000, randomizeNewDarkness.bind(this));
 	game.time.events.loop(40, setDarknessMask.bind(this));
