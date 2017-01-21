@@ -109,7 +109,7 @@ function update() {
 
 	 /* upper map */
 	mapUpper.clear();
-    mapUpper.beginFill(0xffffff);
+    mapUpper.beginFill(0xF4A460);
 	mapUpper.moveTo(0, 0);
  	for(var x = 0; x < GAME_WIDTH+300; x++){
   		mapUpper.lineTo(x,(200 + (100 * isCurveSize) + (200 * Math.sin(Math.PI * ((1-(x/40 + updateTicker))/60)))*isCurveVar));
@@ -119,7 +119,7 @@ function update() {
 
     /* lower map */
   	mapLower.clear();
-    mapLower.beginFill(0xffffff);
+    mapLower.beginFill(0xF4A460);
 	mapLower.moveTo(0, 800);
  	for(var x = 0; x < GAME_WIDTH+300; x++){
   		mapLower.lineTo(x,(550 - (100 * isCurveSize) + (200 * Math.sin(Math.PI * (((x/40 + (updateTicker+60)))/60)))*isCurveVar));
