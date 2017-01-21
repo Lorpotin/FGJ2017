@@ -65,7 +65,10 @@ Player.prototype.update = function() {
     {
         //  Move down
         console.log("alas"); 
-        this.startedGame = true;
+        if (this.startedGame == false) {
+            this.startedGame = true;
+            starttime = Date.now();
+        }
         this.y_move += pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y);
         if(this.y_move < -10){
             this.y_move = -10;
@@ -73,14 +76,20 @@ Player.prototype.update = function() {
     }
     else if (cursors.up.isDown)
     {
-        this.startedGame = true;
+        if (this.startedGame == false) {
+            this.startedGame = true;
+            starttime = Date.now();
+        }
         if(this.y_move > -10){
             this.y_move -= 1;
         }
     }
     else if (cursors.down.isDown)
     {
-        this.startedGame = true;
+        if (this.startedGame == false) {
+            this.startedGame = true;
+            starttime = Date.now();
+        }
         if(this.y_move < 10){
             this.y_move += 1;
         }
@@ -89,7 +98,10 @@ Player.prototype.update = function() {
     {
         //  Move up
         console.log("ylös"); 
-        this.startedGame = true;
+        if (this.startedGame == false) {
+            this.startedGame = true;
+            starttime = Date.now();
+        }
          this.y_move += pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y);
          if(this.y_move > 10){
             this.y_move = 10;
@@ -99,7 +111,14 @@ Player.prototype.update = function() {
     var comparisionY = this.prevYCoordinates[this.prevYCoordinates.length-1] + this.y;
     if( comparisionY < upperLevelYCoord ||
         comparisionY > lowerLevelYCoord){
+
+        for (y=0;y<this.prevYCoordinates.length;y++) {
+            y_pos = (50 - (100 * isCurveSize) + (200 * Math.sin(Math.PI * (((y/49 + (updateTicker-45)))/60)))*isCurveVar);
+            this.prevYCoordinates[y] = y_pos;
+        }
         this.startedGame = false;
-        console.log("collsion");
+        starttime = null;
+        score = 0;
+        this.y_move = 0;
     }
 };
