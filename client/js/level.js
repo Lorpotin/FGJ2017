@@ -112,7 +112,7 @@ function updateLevel(){
  	for(var x = 0; x < GAME_WIDTH+300; x++){
  		var y_pos = (550 - (100 * isCurveSize) + (200 * Math.sin(Math.PI * (((x/40 + (updateTicker+60)))/60)))*isCurveVar);
  		if(player && x === player.x){
- 			upperLevelYCoord = y_pos;
+ 			lowerLevelYCoord = y_pos;
  		}
   		mapLower.lineTo(x,y_pos);
  	}
@@ -122,6 +122,11 @@ function updateLevel(){
 	darknessMask.clear();
     darknessMask.beginFill(0x000000);
     darknessMask.drawCircle(500, 400, 1500 - (1000 * isDarknessSize));
+
+    if(player){
+    	darknessMask.x = player.x;
+    	darknessMask.y = player.y;
+    }
 }
 
 function addTimeEvents(){
