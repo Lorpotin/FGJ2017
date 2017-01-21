@@ -2,7 +2,7 @@
 function init() {
 	
 	//io.connect will connect to a Socket.IO server by using the first parameter as the server address.
-	socket = io.connect("http://localhost:8000", { query: "user=GAME" });
+	socket = io.connect("https://fgj17-tatsiki.c9users.io", { query: "user=GAME" });
 	remotePlayers = [];
 
 

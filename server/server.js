@@ -1,18 +1,15 @@
 var util = require("util"),
 express = require('express');
-app = express(),
-io = require("socket.io");
-Player = require("./player").Player;
-Event = require("./event").Event;
+var app = express();
+var io = require("socket.io");
+var Player = require("./player").Player;
+var Event = require("./event").Event;
 
 var socket, players;
 var WEB_SOCKETS, GAME_SOCKETS;
 
 var darkEvent, xEvent, yEvent;
 var eventActive;
-
-var PORT = 3000;
-
 
 
 function init()  {
@@ -21,7 +18,7 @@ function init()  {
     eventActive = false;
 
     //Set socket server to listen to a port
-    socket = io.listen(8000);
+    socket = io.listen(process.env.PORT);
    	setEventHandlers();
 };
 
@@ -106,7 +103,9 @@ var playerById = function(id, userType)  {
 };
 app.use(express.static('static'));
 
-app.listen(PORT, function() {
+//app.set('port', process.env.PORT);
+//app.set('host', process.env.IP);
+app.listen(3000, function() {
     console.log('LISTENING....');
     init();
 });

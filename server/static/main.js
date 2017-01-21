@@ -19,29 +19,37 @@ $(document).ready(function() {
             $loginPage.fadeOut();
             // Tell the server your username
             $gamePage.show();
+            init(username);
         }
+
     }
 
     function init(username) {
-        socket = io("localhost:8000", { query: "user=WEB" });
+        socket = io("https://fgj17-tatsiki.c9users.io", { query: "user=WEB" });
 
         result = {
             msg: "Jotain shittii",
-            nick: username
+            powerup: "",
+            nick: ""
         };
+        result.nick = username;
 
         socket.on('connect', function() {
             console.log("connection to socket established!");
         });
 
-        $("#button").click(function() {
-            myFunction();
+        $(".btn").click(function() {
+            myFunction($(this).attr("powerup"));
         });
     }
 
 
-    var myFunction = function() {
+    var myFunction = function(powerup) {
+        result.powerup = powerup;
+        console.log(result);
         socket.emit('spawn new powur', result);
     };
+
+    
     
 });
