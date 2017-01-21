@@ -61,7 +61,9 @@ function onClientDisconnect(client) {
         spliceWebUser(removePlayer);
     }
     else if(userType === "GAME") {
+        util.log('game disconnected');
         spliceGameUser(removePlayer);
+        socket.emit("gameDisconnected");
     }
 
 };
