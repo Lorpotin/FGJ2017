@@ -11,6 +11,7 @@ Player = function (game, x, y) {
     this.y_move = 0;
     this.prevSpotY = 0;
     this.startedGame = false;
+    this.gameNumber = 0;
 };
 
 Player.prototype = Object.create(Phaser.Graphics.prototype);
@@ -115,7 +116,9 @@ Player.prototype.update = function() {
 
 function startGame() {
 	player.startedGame = true;
+    player.gameNumber++;
 	startgameText.setText("");
+    extraScore = 0;
 	starttime = Date.now();
 }
 

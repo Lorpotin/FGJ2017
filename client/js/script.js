@@ -1,8 +1,8 @@
 
-var GAME_HEIGHT = 1920;
-var GAME_WIDTH  = 1080;
+var GAME_HEIGHT = 1080;
+var GAME_WIDTH  = 1920;
 var player = null;
-var game = new Phaser.Game(GAME_HEIGHT,GAME_WIDTH, Phaser.CANVAS, '',{preload: preload, create: create, update: update});
+var game = new Phaser.Game(GAME_WIDTH,GAME_HEIGHT,Phaser.CANVAS, '',{preload: preload, create: create, update: update});
 
 var updateTicker = 0;
 var pad1 = null;
@@ -18,6 +18,7 @@ var datajson = {
 
 var score = 0;
 var highscore = 0;
+var extraScore = 0;
 var starttime = null;
 var scoreText;
 var highscoreText;
