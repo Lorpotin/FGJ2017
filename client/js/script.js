@@ -8,6 +8,7 @@ var updateTicker = 0;
 var pad1 = null;
 var socket = null;
 var tickerSpeed = 0.5;
+
 var datajson = {
 	tickerSpeed : 0,
 	curveSize : 0,
@@ -15,6 +16,11 @@ var datajson = {
 	updateTickerState: 0
 };
 
+var score = 0;
+var highscore = 0;
+var starttime = null;
+var scoreText;
+var highscoreText;
 
 var messageArray = [];
 
@@ -27,6 +33,8 @@ function create() {
 	socket = io.connect("https://fgj17-tatsiki.c9users.io", { query: "user=GAME" });
     mapLower = game.add.graphics(0,0);
     mapUpper = game.add.graphics(0,0);
+    scoreText = game.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#FFF' });
+    highscoreText = game.add.text(16, 48, 'Highscore: 0', { fontSize: '32px', fill: '#FFF' });
     
 	player = new Player(game,512,384);
     game.add.existing(player);
@@ -51,6 +59,7 @@ function create() {
 function update() {
 	updateTicker+=tickerSpeed;
 	updateLevel();
+	updateScore();
 }
 
 function sendUpdates(){

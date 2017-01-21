@@ -42,6 +42,7 @@ function onSocketConnection(client) {
     client.on("disconnect", onClientDisconnect);
     client.on("spawn new powur", spawnNewPowur);
     client.on("draw map", drawMap);
+    client.on("image", processImage);
 };
 
 function onClientDisconnect(client) {
@@ -60,7 +61,9 @@ function onClientDisconnect(client) {
         spliceWebUser(removePlayer);
     }
     else if(userType === "GAME") {
+        util.log('game disconnected');
         spliceGameUser(removePlayer);
+        socket.emit("gameDisconnected");
     }
 
 };
@@ -83,6 +86,14 @@ function spawnNewPowur(data) {
 function drawMap(data) {
     console.log(data);
     socket.emit("drawMap", data);
+}
+
+function processImage(data) {
+    console.log('image sent ' + data.substring(1,20));
+    data = {
+        image : data
+    }
+    socket.emit("image", data);
 }
 
 var playerById = function(id, userType)  {
