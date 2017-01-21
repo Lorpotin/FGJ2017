@@ -101,11 +101,11 @@ var playerById = function(id, userType)  {
     
     
 };
-//app.use(express.static('static'));
+app.use(express.static('static'));
 
-app.set('port', process.env.PORT);
-app.set('host', process.env.IP);
-app.listen(function() {
+//app.set('port', process.env.PORT);
+//app.set('host', process.env.IP);
+app.listen(3000, function() {
     console.log('LISTENING....');
     init();
 });

@@ -19,7 +19,9 @@ $(document).ready(function() {
             $loginPage.fadeOut();
             // Tell the server your username
             $gamePage.show();
+            init(username);
         }
+
     }
 
     function init(username) {
@@ -27,8 +29,10 @@ $(document).ready(function() {
 
         result = {
             msg: "Jotain shittii",
-            nick: username
+            powerup: "",
+            nick: ""
         };
+        result.nick = username;
 
         socket.on('connect', function() {
             console.log("connection to socket established!");
@@ -40,8 +44,12 @@ $(document).ready(function() {
     }
 
 
-    var myFunction = function() {
+    var myFunction = function(powerup) {
+        result.powerup = powerup;
+        console.log(result);
         socket.emit('spawn new powur', result);
     };
+
+    
     
 });
