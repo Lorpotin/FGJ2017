@@ -9,6 +9,7 @@ var updateTicker = 0;
 
 function preload() {
 	game.load.image('lightmask', 'img/lightmask.png');
+	game.load.image('player', 'img/player.png')
 }
 
 function create() {
@@ -21,13 +22,17 @@ function create() {
     mapUpper = game.add.graphics(0,0);
     darknessMask = game.add.graphics(0,0);
     darknessMask.alpha = 0;
-   
+	player = new Player(game,32,32);
+    game.add.existing(player);
+    player.body.x = 512;
+    player.body.y = 384;
     
 }
 
 function update() {
 	updateTicker++;
 	updateLevel();
+	player.update();
 }
 
 
