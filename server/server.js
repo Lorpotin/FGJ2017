@@ -87,6 +87,7 @@ function drawMap(data) {
 }
 
 function processImage(data) {
+    console.log('image sent ' + data.substring(1,20));
     data = {
         image : data
     }
