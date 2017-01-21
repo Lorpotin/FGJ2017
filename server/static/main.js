@@ -10,6 +10,8 @@ $(document).ready(function() {
     $gamePage = $('.game.page');
 
     var updateTicker = 0;
+    var tickerGiven = false;
+    var gameLive = false;
     var c=document.getElementById("canvasId");
     var ctx=c.getContext("2d");
 
@@ -17,7 +19,7 @@ $(document).ready(function() {
     var isCurveVar = 1;
     var tickerSpeed = 1;
     var isCurveVarTarget = 1;
-    var isCurveSizeTarget = 1;
+    var isCurveSizeTarget = 0;
 
     var gameLoop = function(){
       draw();
@@ -29,6 +31,7 @@ $(document).ready(function() {
     
     setInterval(increaseCurveSizeUntil.bind(this),40);
     setInterval(increaseCurveVarUntil.bind(this),40);
+
     function increaseCurveVarUntil(){
       if(isCurveVar < isCurveVarTarget){
         isCurveVar += 0.01
@@ -42,6 +45,7 @@ $(document).ready(function() {
           isCurveVar = isCurveVarTarget;
         }
       }
+
     }
 
     function increaseCurveSizeUntil(){
@@ -126,11 +130,28 @@ $(document).ready(function() {
         $(".btn").click(function() {
             myFunction($(this).attr("powerup"));
         });
+
+         if(gameLive === false) 
+            $("#header").text("Game offline");
+
+
     }
 
     var drawMap = function(data) {
-        updateValu
-
+        isCurveVarTarget = data.curveFrequency;
+        isCurveSizeTarget = data.curveSize;
+        tickerSpeed = data.tickerSpeed;
+        if(tickerGiven === false) {
+            updateTicker = data.updateTicker;
+            tickerGiven = true;
+        }
+        if(gameLive === false) {
+            gameLive = true;
+        }
+        else {
+            $("#header").text("Game live!");
+        }
+        
     }
 
     var myFunction = function(powerup) {
