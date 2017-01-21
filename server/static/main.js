@@ -122,6 +122,7 @@ $(document).ready(function() {
         });
         socket.on('drawMap', drawMap);
         socket.on('gameDisconnected', handleGameDisconnect);
+        socket.on('playerPositions', drawPlayer);
 
 
         $(".btn").click(function() {
@@ -161,6 +162,10 @@ $(document).ready(function() {
             $("#header").text("Game live!");
         }
         
+    }
+
+    var drawPlayer = function(data) {
+        console.log(data);
     }
 
     var handleGameDisconnect = function() {
