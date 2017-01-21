@@ -51,9 +51,11 @@ function fileComplete(progress, cacheKey, success, totalLoaded, totalFiles){
 		game.time.events.add(3000,function(){
 			game.add.tween(this).to( { width: 1920, height: 1080}, 2000, Phaser.Easing.Linear.None, true);
 			game.add.tween(this).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true,1000).onComplete.add(function(){
-				extraScore  += 50;
-			});	
-
+				console.log(this,player.gameNumber,player.startedGame)
+				if(player.startedGame && player.gameNumber === this[0]){
+					extraScore  += 50;
+				}
+			},[player.gameNumber]);	
 		}.bind(obj))
 
 }
