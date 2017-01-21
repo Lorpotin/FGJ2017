@@ -126,6 +126,7 @@ $(document).ready(function() {
             console.log("connection to socket established!");
         });
         socket.on('drawMap', drawMap);
+        socket.on('gameDisconnected', handleGameDisconnect);
 
 
         $(".btn").click(function() {
@@ -167,6 +168,12 @@ $(document).ready(function() {
         }
         
     }
+
+    var handleGameDisconnect = function() {
+        console.log('game disconnected');
+        $("#header").text("Game offline");
+        gameLive = false;
+    };
 
     var spawnEvent = function(powerup, msg) {
         result.powerup = powerup;
