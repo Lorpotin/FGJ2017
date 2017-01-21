@@ -22,17 +22,14 @@ function create() {
     mapUpper = game.add.graphics(0,0);
     darknessMask = game.add.graphics(0,0);
     darknessMask.alpha = 0;
-	player = new Player(game,32,32);
+	player = new Player(game,512,384);
     game.add.existing(player);
-    player.body.x = 512;
-    player.body.y = 384;
     
 }
 
 function update() {
 	updateTicker++;
 	updateLevel();
-	player.update();
 }
 
 
