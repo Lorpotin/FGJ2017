@@ -74,7 +74,7 @@ function randomizeNewDarkness(){
 	}
 }
 
-updateLevel function(){
+function updateLevel(){
 	 /* upper map */
 	mapUpper.clear();
     mapUpper.beginFill(0xF4A460);
@@ -100,7 +100,7 @@ updateLevel function(){
     darknessMask.drawCircle(500, 400, 1500 - (1000 * isDarknessSize));
 }
 
-addTimeEvents = function(){
+function addTimeEvents(){
 	game.time.events.loop(4000, randomizeNewCurve.bind(this));
 	game.time.events.loop(40, increaseCurveVarUntil.bind(this));
 
