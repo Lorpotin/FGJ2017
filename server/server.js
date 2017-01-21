@@ -9,13 +9,14 @@ var socket, players;
 var WEB_SOCKETS, GAME_SOCKETS;
 
 var darkEvent, xEvent, yEvent;
-var eventActive;
-
+var eventStatus;
+var count = 5;
+var counter;
 
 function init()  {
 	WEB_SOCKETS = [];
     GAME_SOCKETS = [];
-    eventActive = false;
+    eventStatus = false;
 
     //Set socket server to listen to a port
     socket = io.listen(process.env.PORT);
@@ -79,21 +80,47 @@ function spliceGameUser(data) {
 }
 
 function spawnNewPowur(data) {
-	console.log(data);
-	socket.emit("newPowerUp", data);
+    if(!isEventActive()) {
+        console.log(data);
+        eventStatus = true;
+        socket.emit("newPowerUp", data);
+        count = 5;
+        calculateEventTimer();
+    }
+    else {
+        data = {
+            msg: "Event still active! Please wait"
+        }
+        socket.emit("eventActive", data);
+    }
+	
 }
 
+function calculateEventTimer(data) {
+    counter = setInterval(timer, 1000);
+}
+
+function timer() {
+    count -= 1;
+    if(count <= 0) {
+        clearInterval(counter);
+        eventStatus = false;
+        return;
+    }
+}
 function drawMap(data) {
-    console.log(data);
     socket.emit("drawMap", data);
 }
 
 function processImage(data) {
-    console.log('image sent ' + data.substring(1,20));
     data = {
         image : data
     }
     socket.emit("image", data);
+}
+
+function isEventActive() {
+    return eventStatus;
 }
 
 var playerById = function(id, userType)  {

@@ -137,7 +137,7 @@ $(document).ready(function() {
             var file = e.originalEvent.target.files[0],
                 reader = new FileReader();
             //When the file has been read...
-            reader.onload = function(evt){
+            reader.onload = function(evt) {
                 socket.emit('image', evt.target.result);
             };
             reader.readAsDataURL(file);  
