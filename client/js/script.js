@@ -14,6 +14,11 @@ var varTicker = 0;
 var updateCycle = 1;
 var mapLower = null;
 var mapUpper = null;
+var isCurveVar = 1;
+var isCurveVarTarget = 1;
+
+var isCurveSize = 0;
+var isCurveSizeTarget = 0;
 
 var lowerLevelVar = 0
 
@@ -27,7 +32,11 @@ function create() {
 	game.time.advancedTiming= true;
 	game.time.desiredFps = 60;
 	game.time.desiredFpsMult = 1/60;
-	
+	game.time.events.loop(4000, randomizeNewCurve.bind(this));
+	game.time.events.loop(50, increaseCurveVarUntil.bind(this));
+
+	game.time.events.loop(2000, randomizeNewCurveSize.bind(this));
+	game.time.events.loop(50, increaseCurveSizeUntil.bind(this));
 /*
 
 	game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -57,38 +66,69 @@ function create() {
    
     
 }
+function increaseCurveVarUntil(){
+	if(isCurveVar < isCurveVarTarget){
+		isCurveVar += 0.01
+		if(isCurveVar > isCurveVarTarget){
+			isCurveVar = isCurveVarTarget;
+		}
+	}
+	else if(isCurveVar > isCurveVarTarget){
+		isCurveVar -= 0.01;
+		if(isCurveVar < isCurveVarTarget){
+			isCurveVar = isCurveVarTarget;
+		}
+	}
+}
+
+function increaseCurveSizeUntil(){
+	if(isCurveSize < isCurveSizeTarget){
+		isCurveSize += 0.01
+		if(isCurveSize > isCurveSizeTarget){
+			isCurveSize = isCurveSizeTarget;
+		}
+	}
+	else if(isCurveSize > isCurveSizeTarget){
+		isCurveSize -= 0.01;
+		if(isCurveSize < isCurveSizeTarget){
+			isCurveSize = isCurveSizeTarget;
+		}
+	}
+}
+
+function randomizeNewCurve(){
+	isCurveVarTarget = Math.random();
+}
+
+function randomizeNewCurveSize(){
+	isCurveSizeTarget = Math.random();
+}
 
 function update() {
 	updateTicker++;
-    /* lower map */
-  	mapLower.clear();
-	mapLower.lineStyle(3, 0xffffff, 1);
-    mapLower.beginFill(0xffffff);
-	mapLower.moveTo(0, 800);
- 	for(var x = 0; x < GAME_WIDTH+300; x++){
-  		mapLower.lineTo(x,500 + (200 * Math.sin(Math.PI * (((x/40 + (updateTicker+60)))/60))));
- 	}
-	mapLower.lineTo( GAME_WIDTH+300 , 800);
-    mapLower.endFill();
-	//graphics.moveTo(0, 400);
-    
- // * Math.sin(Math.PI * updateTicker/60)
- /*	for(var x = 0; x < GAME_WIDTH+300; x++){
-  		graphics.lineTo(x, -200 * Math.sin(Math.PI * ((x/40 + updateTicker)/60)));
- 	}
-	graphics.lineTo( GAME_WIDTH+300, 800 );
-
 
 	 /* upper map */
 	mapUpper.clear();
-	mapUpper.lineStyle(3, 0xffffff, 1);
     mapUpper.beginFill(0xffffff);
 	mapUpper.moveTo(0, 0);
  	for(var x = 0; x < GAME_WIDTH+300; x++){
-  		mapUpper.lineTo(x,100 + (200 * Math.sin(Math.PI * ((1-(x/40 + updateTicker))/60))));
+  		mapUpper.lineTo(x,(200 + (100 * isCurveSize) + (200 * Math.sin(Math.PI * ((1-(x/40 + updateTicker))/60)))*isCurveVar));
  	}
 	mapUpper.lineTo( GAME_WIDTH+300, 0);
     mapUpper.endFill();
+
+    /* lower map */
+  	mapLower.clear();
+    mapLower.beginFill(0xffffff);
+	mapLower.moveTo(0, 800);
+ 	for(var x = 0; x < GAME_WIDTH+300; x++){
+  		mapLower.lineTo(x,(550 - (100 * isCurveSize) + (200 * Math.sin(Math.PI * (((x/40 + (updateTicker+60)))/60)))*isCurveVar));
+ 	}
+	mapLower.lineTo( GAME_WIDTH+300 , 800);
+    mapLower.endFill();
+	
+
+	
 }
 
 
