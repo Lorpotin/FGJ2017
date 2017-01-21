@@ -31,7 +31,7 @@ function preload() {
 function create() {
 	addTimeEvents();
 
-	// socket = io.connect("https://fgj17-tatsiki.c9users.io", { query: "user=GAME" });
+	socket = io.connect("https://fgj17-tatsiki.c9users.io", { query: "user=GAME" });
     mapLower = game.add.graphics(0,0);
     mapUpper = game.add.graphics(0,0);
     scoreText = game.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#FFF' });
@@ -68,7 +68,7 @@ function sendUpdates(){
 	datajson.curveSize = isCurveSizeTarget;
 	datajson.curveFrequency = isCurveVarTarget;
 	datajson.updateTicker = updateTicker;
-	// socket.emit("draw map", datajson);
+	socket.emit("draw map", datajson);
 }
 
 
