@@ -128,7 +128,7 @@ $(document).ready(function() {
         socket.on('drawMap', drawMap);
 
         $(".btn").click(function() {
-            myFunction($(this).attr("powerup"));
+            myFunction($(this).attr("powerup"), $("#homovittu").val());
         });
 
          if(gameLive === false) 
@@ -154,8 +154,9 @@ $(document).ready(function() {
         
     }
 
-    var myFunction = function(powerup) {
+    var myFunction = function(powerup, msg) {
         result.powerup = powerup;
+        result.msg = msg;
         console.log(result);
         socket.emit('spawn new powur', result);
     };
