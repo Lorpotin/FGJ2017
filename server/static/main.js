@@ -1,6 +1,6 @@
 $(document).ready(function() {
     
-    socket = io("localhost:8000");
+    socket = io("localhost:8000", { query: "user=WEB" });
 
     result = {
         msg: "Jotain shittii",
