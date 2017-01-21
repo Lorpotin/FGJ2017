@@ -1,4 +1,9 @@
 
+$(document).on("click", "#button", function() 
+{
+    emitMapXY("15", "25");
+});
+
 function init() {
 	
 	//io.connect will connect to a Socket.IO server by using the first parameter as the server address.
@@ -19,6 +24,14 @@ var setEventHandlers = function() {
 	socket.on("disconnect", onSocketDisconnect);
 	socket.on("newPowerUp", spawnNewPower);
 };
+
+function emitMapXY(x,y) {
+	data = {
+		x: x,
+		y: y
+	}
+	socket.emit("drawMap", data);
+}
 
 function onSocketConnected() {
     console.log("GAME_PLAYER Connected to socket server");

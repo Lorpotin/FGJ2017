@@ -37,12 +37,19 @@ $(document).ready(function() {
         socket.on('connect', function() {
             console.log("connection to socket established!");
         });
+        socket.on('drawMap', function() {
+            console.log("Map draw yes.");
+            drawMap();
+        });
 
         $(".btn").click(function() {
             myFunction($(this).attr("powerup"));
         });
     }
 
+    var drawMap = function(data) {
+        console.log("yes");
+    }
 
     var myFunction = function(powerup) {
         result.powerup = powerup;
@@ -50,6 +57,6 @@ $(document).ready(function() {
         socket.emit('spawn new powur', result);
     };
 
-    
+
     
 });

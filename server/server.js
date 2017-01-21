@@ -41,6 +41,7 @@ function onSocketConnection(client) {
     //The client.on event listeners are used to detect when a player has either disconnected or sent a message to the server.
     client.on("disconnect", onClientDisconnect);
     client.on("spawn new powur", spawnNewPowur);
+    client.on("draw map", drawMap);
 };
 
 function onClientDisconnect(client) {
@@ -77,6 +78,11 @@ function spliceGameUser(data) {
 function spawnNewPowur(data) {
 	console.log(data);
 	socket.emit("newPowerUp", data);
+}
+
+function drawMap(data) {
+    console.log(data);
+    socket.emit("drawMap", data);
 }
 
 var playerById = function(id, userType)  {
