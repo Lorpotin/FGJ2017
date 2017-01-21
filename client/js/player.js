@@ -20,7 +20,6 @@ Player.prototype.constructor = Player;
  * Automatically called by World.update
  **/
 
-var movementSpeed = 500;
 
 Player.prototype.update = function() {
 
@@ -72,13 +71,19 @@ Player.prototype.update = function() {
             this.y_move = -10;
         }
     }
-    else if (cursors.left.isDown)
+    else if (cursors.up.isDown)
     {
-        //  Move up
+        this.startedGame = true;
+        if(this.y_move > -10){
+            this.y_move -= 1;
+        }
     }
-    else if (cursors.right.isDown)
+    else if (cursors.down.isDown)
     {
-        //  Move up
+        this.startedGame = true;
+        if(this.y_move < 10){
+            this.y_move += 1;
+        }
     }
     else if (pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y) < -0.1)
     {
@@ -94,6 +99,7 @@ Player.prototype.update = function() {
     var comparisionY = this.prevYCoordinates[this.prevYCoordinates.length-1] + this.y;
     if( comparisionY < upperLevelYCoord ||
         comparisionY > lowerLevelYCoord){
+        this.startedGame = false;
         console.log("collsion");
     }
 };
