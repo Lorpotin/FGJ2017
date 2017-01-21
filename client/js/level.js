@@ -10,7 +10,7 @@ var isCurveSize = 0;
 var isCurveSizeTarget = 0;
 
 var isDarknessSize = 0;
-var isDarknessTarget = 0;
+var isDarknessTarget = 0.5;
 
 var upperLevelYCoord = 0;
 var lowerLevelYCoord = 0;
@@ -18,6 +18,10 @@ var lowerLevelYCoord = 0;
 function addDarknessMask(){
 	mapUpper.mask = darknessMask;
     mapLower.mask = darknessMask;
+    background.mask = darknessMask;
+    for(var i = 0; i < particleArray.length; i++){
+    	particleArray[i].mask = darknessMask;
+    }
 }
 
 function removeDarknessMask(){
@@ -65,8 +69,7 @@ function setDarknessMask(){
 		isDarknessSize -= 0.01;
 		if(isDarknessSize < isDarknessTarget){
 			isDarknessSize = isDarknessTarget;
-			mapUpper.mask = null;
-			mapLower.mask = null;
+		
 		}
 	}
 }
@@ -82,11 +85,10 @@ function randomizeNewCurveSize(){
 function randomizeNewDarkness(){
 	if(Math.floor(Math.random() * 2) === 0){
 		isDarknessSize = 0;
-		isDarknessTarget = 1;
-		addDarknessMask();
+		isDarknessTarget = 0;
 	}
 	else{
-		removeDarknessMask();
+		//removeDarknessMask();
 	}
 }
 var testcollspot1 = null;
@@ -97,7 +99,7 @@ function updateLevel(){
     mapUpper.beginFill(0xF4A460);
 	mapUpper.moveTo(0, 0);
  	for(var x = 0; x < GAME_WIDTH+1000; x++){
- 		var y_pos = (200 + (100 * isCurveSize) + (200 * Math.sin(Math.PI * ((1-(x/40 + updateTicker))/60)))*isCurveVar);
+ 		var y_pos = (230 + (100 * isCurveSize) + (200 * Math.sin(Math.PI * ((1-(x/40 + updateTicker))/60)))*isCurveVar);
  		if(player && x === player.x){
  			upperLevelYCoord = y_pos;
  		}
@@ -112,7 +114,7 @@ function updateLevel(){
 	mapLower.moveTo(0, 1200);
  	for(var x = 0; x < GAME_WIDTH+1000; x++){
 	mapLower.beginFill(0xF4A460);
- 		var y_pos = (550 - (100 * isCurveSize) + (200 * Math.sin(Math.PI * (((x/40 + (updateTicker+60)))/60)))*isCurveVar);
+ 		var y_pos = (800 - (100 * isCurveSize) + (200 * Math.sin(Math.PI * (((x/40 + (updateTicker+60)))/60)))*isCurveVar);
  		if(player && x === player.x){
  		
  			lowerLevelYCoord = y_pos;
@@ -124,11 +126,11 @@ function updateLevel(){
 	
 	darknessMask.clear();
     darknessMask.beginFill(0x000000);
-    darknessMask.drawCircle(200, 0, 1500 - (1000 * isDarknessSize));
+    darknessMask.drawCircle(200, 0, 3000 - (2500 *  isDarknessSize));
 
     if(player){
-    	darknessMask.x = player.x;
-    	darknessMask.y = player.y;
+    	darknessMask.x = player.x ;
+    	darknessMask.y = player.y + player.prevYCoordinates[player.prevYCoordinates.length-1];
     }
 }
 
@@ -139,12 +141,8 @@ function addTimeEvents(){
 	game.time.events.loop(2000, randomizeNewCurveSize.bind(this));
 	game.time.events.loop(40, increaseCurveSizeUntil.bind(this));
 
-//	game.time.events.loop(4000, randomizeNewDarkness.bind(this));
-//	game.time.events.loop(40, setDarknessMask.bind(this));
+	//game.time.events.loop(4000, randomizeNewDarkness.bind(this));
+	game.time.events.loop(40, setDarknessMask.bind(this));
 
 	game.time.events.loop(2000, sendUpdates.bind(this));
-}
-
-function addImageObstacle(){
-	this.game.load.image('hueso', imageData);
 }

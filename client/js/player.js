@@ -26,7 +26,7 @@ Player.prototype.update = function() {
 
     this.clear();
     this.moveTo(0, this.prevYCoordinates[0]);
-    this.lineStyle(10, 0xFF0000);
+    this.lineStyle(10, 0xFFD700);
 
 
     for(var y = 0; y < this.prevYCoordinates.length; y++){
@@ -52,8 +52,7 @@ Player.prototype.update = function() {
             } else if (this.startedGame === false && y === this.prevYCoordinates.length-1) {
                 var y_pos = (50 - (100 * isCurveSize) + (200 * Math.sin(Math.PI * (((y/49 + (updateTicker-45)))/60)))*isCurveVar);
                 this.prevYCoordinates[y] = y_pos;
-            }
-          
+            } 
         }
     }
 
