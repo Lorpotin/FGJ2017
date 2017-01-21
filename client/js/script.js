@@ -27,6 +27,8 @@ var startgameText;
 var messageArray = [];
 var particleArray = [];
 
+var isInvertedVar = 1;
+
 function preload() {
 }
 
@@ -54,9 +56,6 @@ function create() {
     startgameText = game.add.text(300, 500, 'Move up or down to start the game', { fontSize: '32px', fill: '#FFF' });
 	player = new Player(game,512,384);
     game.add.existing(player);
-
-
-
 	
     darknessMask = game.add.graphics(0,0);
     darknessMask.alpha = 0;
@@ -84,7 +83,7 @@ function update() {
 		particleArray[i].x -= 100;
 		if(particleArray[i].x < 0){
 			particleArray[i].width = 2 + (2*Math.random());
-			particleArray[i].height = 1 + (1*Math.random());
+			particleArray[i].height = 1;
 			particleArray[i].x = GAME_WIDTH + 1000 * Math.random();
 			particleArray[i].y = 1080 * Math.random();
 		}

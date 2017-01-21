@@ -52,7 +52,7 @@ Player.prototype.update = function() {
             if(this.startedGame === true){
                 this.prevYCoordinates[y] += this.y_move;
             } else if (this.startedGame === false && y === this.prevYCoordinates.length-1) {
-                var y_pos = (50 - (100 * isCurveSize) + (200 * Math.sin(Math.PI * (((y/49 + (updateTicker-45)))/60)))*isCurveVar);
+                var y_pos = ( (100 * isCurveSize) + (200 * Math.sin(Math.PI * (((y/49 + (updateTicker-45)))/60)))*isCurveVar);
                 this.prevYCoordinates[y] = y_pos;
             } 
         }
@@ -70,7 +70,7 @@ Player.prototype.update = function() {
         if (this.startedGame == false) {
             startGame();
         }
-        this.y_move += pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y);
+        this.y_move += pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y) * isInvertedVar;
         if(this.y_move < -10){
             this.y_move = -10;
         }
@@ -82,7 +82,7 @@ Player.prototype.update = function() {
             
         }
         if(this.y_move > -10){
-            this.y_move -= 1;
+            this.y_move -= 1 * isInvertedVar;
         }
     }
     else if (cursors.down.isDown)
@@ -91,7 +91,7 @@ Player.prototype.update = function() {
 			startGame();
         }
         if(this.y_move < 10){
-            this.y_move += 1;
+            this.y_move += 1 * isInvertedVar;
         }
     }
     else if (pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y) < -0.1)
@@ -101,7 +101,7 @@ Player.prototype.update = function() {
         if (this.startedGame == false) {
             startGame();
         }
-         this.y_move += pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y);
+         this.y_move += pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y) * isInvertedVar;
          if(this.y_move > 10){
             this.y_move = 10;
         }
@@ -118,6 +118,7 @@ Player.prototype.update = function() {
 function startGame() {
 	player.startedGame = true;
     player.gameNumber++;
+    isInvertedVar = 1;
 	startgameText.setText("");
     extraScore = 0;
 	starttime = Date.now();
@@ -125,7 +126,7 @@ function startGame() {
 
 function endGame() {
 	for (y=0;y<player.prevYCoordinates.length;y++) {
-		y_pos = (50 - (100 * isCurveSize) + (200 * Math.sin(Math.PI * (((y/49 + (updateTicker-45)))/60)))*isCurveVar);
+		y_pos = ((100 * isCurveSize) + (200 * Math.sin(Math.PI * (((y/49 + (updateTicker-45)))/60)))*isCurveVar);
 		player.prevYCoordinates[y] = y_pos;
 	}
 	player.startedGame = false;
