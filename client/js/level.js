@@ -124,7 +124,7 @@ function updateLevel(){
 	
 	darknessMask.clear();
     darknessMask.beginFill(0x000000);
-    darknessMask.drawCircle(0, 0, 1500 - (1000 * isDarknessSize));
+    darknessMask.drawCircle(200, 0, 1500 - (1000 * isDarknessSize));
 
     if(player){
     	darknessMask.x = player.x;

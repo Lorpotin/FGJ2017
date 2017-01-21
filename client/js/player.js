@@ -10,12 +10,11 @@ Player = function (game, x, y) {
     }
     this.y_move = 0;
     this.prevSpotY = 0;
-
+    this.startedGame = false;
 };
 
 Player.prototype = Object.create(Phaser.Graphics.prototype);
 Player.prototype.constructor = Player;
-
 
 /**
  * Automatically called by World.update
@@ -29,10 +28,10 @@ Player.prototype.update = function() {
     this.moveTo(0, this.prevYCoordinates[0]);
     this.lineStyle(10, 0xFF0000);
 
+
     for(var y = 0; y < this.prevYCoordinates.length; y++){
         if(this.prevYCoordinates[y+5]){
             this.prevYCoordinates[y+4] = this.prevYCoordinates[y+5];
-            
         } 
         if(this.prevYCoordinates[y+4]){
             this.prevYCoordinates[y+3] = this.prevYCoordinates[y+4];
@@ -48,7 +47,13 @@ Player.prototype.update = function() {
             this.prevYCoordinates[y] = this.prevYCoordinates[y+1];
         }
         else {
-            this.prevYCoordinates[y] += this.y_move;
+            if(this.startedGame === true){
+                this.prevYCoordinates[y] += this.y_move;
+            } else if (this.startedGame === false && y === this.prevYCoordinates.length-1) {
+                var y_pos = (50 - (100 * isCurveSize) + (200 * Math.sin(Math.PI * (((y/49 + (updateTicker-45)))/60)))*isCurveVar);
+                this.prevYCoordinates[y] = y_pos;
+            }
+          
         }
     }
 
@@ -60,6 +65,7 @@ Player.prototype.update = function() {
     if (cursors.up.isDown)
     {
         //  Move down
+        this.startedGame = true;
         this.y_move -= 0.75;
         if(this.y_move < -10){
             this.y_move = -10;
@@ -76,9 +82,16 @@ Player.prototype.update = function() {
     else if (cursors.down.isDown)
     {
         //  Move up
+        this.startedGame = true;
          this.y_move += 0.75;
          if(this.y_move > 10){
             this.y_move = 10;
         }
+    }
+
+    var comparisionY = this.prevYCoordinates[this.prevYCoordinates.length-1] + this.y;
+    if( comparisionY < upperLevelYCoord ||
+        comparisionY > lowerLevelYCoord){
+        console.log("collsion");
     }
 };
