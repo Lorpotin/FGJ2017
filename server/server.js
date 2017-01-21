@@ -3,8 +3,12 @@ express = require('express');
 app = express(),
 io = require("socket.io");
 Player = require("./player").Player;
+Event = require("./event").Event;
 
 var socket, players;
+
+var darkEvent, xEvent, yEvent;
+var eventActive;
 
 var PORT = 3000;
 
@@ -12,6 +16,8 @@ var PORT = 3000;
 
 function init()  {
 	players = [];
+    eventActive = false;
+
     //Set socket server to listen to a port
     socket = io.listen(8000);
    	setEventHandlers();
@@ -24,9 +30,13 @@ function setEventHandlers() {
 
 //The client variable is passed to onSocketConnection and is used to identify the player that just connected to the game.
 function onSocketConnection(client) {
-	//Each player is identified using a unique client.id number. We'll use this later when communicating game updates to other players. 
-	//For now the util.log line will output the client identification number to the terminal on connection.
-    util.log("New player has connected: "+client.id);
+    if(client.handshake.query.user === "GAME") {
+        util.log("GAME_PLAYER connected!"+client.id);
+    }
+    else {
+        util.log("WEB_PLAYER connected!"+client.id);
+    }
+
     //The client.on event listeners are used to detect when a player has either disconnected or sent a message to the server.
     client.on("disconnect", onClientDisconnect);
     client.on("new player", onNewPlayer);
@@ -34,7 +44,7 @@ function onSocketConnection(client) {
 };
 
 function onClientDisconnect() {
-    util.log("Player has disconnected: "+this.id);
+    util.log("WEB_PLAYER has disconnected: "+this.id);
 
    //gets the correct id
 	var removePlayer = playerById(this.id);
@@ -42,7 +52,7 @@ function onClientDisconnect() {
 
 	if (!removePlayer) 
 	{
-    	util.log("Player not found: "+this.id);
+    	util.log("WEB_PLAYER not found: "+this.id);
     	return;
 	};
 	//removes the player with certain id from player array
@@ -51,6 +61,7 @@ function onClientDisconnect() {
 	this.broadcast.emit("remove player", {id: this.id});
 
 };
+
 
 function spawnNewPowur(data) {
 	console.log(data);
