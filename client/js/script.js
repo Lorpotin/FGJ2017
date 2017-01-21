@@ -2,16 +2,28 @@
 var GAME_HEIGHT = 1024;
 var GAME_WIDTH  = 768;
 var player = null;
-var game = new Phaser.Game(GAME_HEIGHT,GAME_WIDTH, Phaser.CANVAS, '',{ preload: preload, create: create, update: update});
+var game = new Phaser.Game(GAME_HEIGHT,GAME_WIDTH, Phaser.CANVAS, '',{preload: preload, create: create, update: update});
 
 var updateTicker = 0;
 var pad1 = null;
+var socket = null;
+var tickerSpeed = 0.5;
+var datajson = {
+	tickerSpeed : 0,
+	curveSize : 0,
+	curveFrequency: 0,
+	updateTickerState: 0
+};
+
+
 
 function preload() {
 }
 
 function create() {
 	addTimeEvents();
+
+	socket = io.connect("https://fgj17-tatsiki.c9users.io", { query: "user=GAME" });
     mapLower = game.add.graphics(0,0);
     mapUpper = game.add.graphics(0,0);
     
@@ -27,9 +39,16 @@ function create() {
 }
 
 function update() {
-	updateTicker+=0.1;
+	updateTicker+=tickerSpeed;
 	updateLevel();
 }
 
+function sendUpdates(){
+	datajson.tickerSpeed = tickerSpeed;
+	datajson.curveSize = isCurveSizeTarget;
+	datajson.curveFrequency = isCurveVarTarget;
+	datajson.updateTicker = updateTicker;
+	socket.emit("draw map", datajson);
+}
 
 

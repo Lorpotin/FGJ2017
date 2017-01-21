@@ -15,6 +15,11 @@ var isDarknessTarget = 0;
 var upperLevelYCoord = 0;
 var lowerLevelYCoord = 0;
 
+$(document).on("click", "#button", function() 
+{
+	isCurveVarTarget = 0;
+});
+
 function addDarknessMask(){
 	mapUpper.mask = darknessMask;
     mapLower.mask = darknessMask;
@@ -142,4 +147,5 @@ function addTimeEvents(){
 	game.time.events.loop(4000, randomizeNewDarkness.bind(this));
 	game.time.events.loop(40, setDarknessMask.bind(this));
 
+	game.time.events.loop(500, sendUpdates.bind(this));
 }
