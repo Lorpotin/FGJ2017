@@ -6,6 +6,7 @@ Player = require("./player").Player;
 Event = require("./event").Event;
 
 var socket, players;
+var WEB_SOCKETS, GAME_SOCKETS;
 
 var darkEvent, xEvent, yEvent;
 var eventActive;
@@ -15,7 +16,8 @@ var PORT = 3000;
 
 
 function init()  {
-	players = [];
+	WEB_SOCKETS = [];
+    GAME_SOCKETS = [];
     eventActive = false;
 
     //Set socket server to listen to a port
@@ -32,55 +34,75 @@ function setEventHandlers() {
 function onSocketConnection(client) {
     if(client.handshake.query.user === "GAME") {
         util.log("GAME_PLAYER connected!"+client.id);
+        GAME_SOCKETS.push(client.id);
     }
-    else {
+    else if (client.handshake.query.user === "WEB") {
         util.log("WEB_PLAYER connected!"+client.id);
+        WEB_SOCKETS.push(client.id);
     }
 
     //The client.on event listeners are used to detect when a player has either disconnected or sent a message to the server.
     client.on("disconnect", onClientDisconnect);
-    client.on("new player", onNewPlayer);
     client.on("spawn new powur", spawnNewPowur);
 };
 
-function onClientDisconnect() {
-    util.log("WEB_PLAYER has disconnected: "+this.id);
+function onClientDisconnect(client) {
 
+    var userType = this.handshake.query.user;
    //gets the correct id
-	var removePlayer = playerById(this.id);
-	console.log(removePlayer);
+	var removePlayer = playerById(this.id, userType);
 
 	if (!removePlayer) 
 	{
-    	util.log("WEB_PLAYER not found: "+this.id);
+    	util.log("SOCKET not found: "+this.id);
     	return;
 	};
-	//removes the player with certain id from player array
-	players.splice(players.indexOf(removePlayer), 1);
-	//Inform other players that a player disconnected
-	this.broadcast.emit("remove player", {id: this.id});
+
+    if(userType === "WEB") {
+        spliceWebUser(removePlayer);
+    }
+    else if(userType === "GAME") {
+        spliceGameUser(removePlayer);
+    }
 
 };
 
+function spliceWebUser(data) {
+    //removes the player with certain id from player array
+    WEB_SOCKETS.splice(WEB_SOCKETS.indexOf(data), 1);
+}
+
+function spliceGameUser(data) {
+    //removes the player with certain id from player array
+    GAME_SOCKETS.splice(GAME_SOCKETS.indexOf(data), 1);
+}
 
 function spawnNewPowur(data) {
 	console.log(data);
 	socket.emit("newPowerUp", data);
 }
 
-var onNewPlayer = function(data) {
-    players.push(newPlayer);
-};
-
-var playerById = function(id)  {
+var playerById = function(id, userType)  {
     var i;
-    for (i = 0; i < players.length; i++)
-    {
-        if (players[i].id == id)
-        return players[i];
-    };
+    if(userType === "WEB") {
+        for (i = 0; i < WEB_SOCKETS.length; i++)
+        {
+            if (WEB_SOCKETS[i] === id) 
+                return WEB_SOCKETS[i];
 
-    return false;
+        };
+    }
+    else if(userType === "GAME") {
+        for (i = 0; i < GAME_SOCKETS.length; i++)
+        {
+            if (GAME_SOCKETS[i] === id) 
+                return GAME_SOCKETS[i];
+        };
+    }
+    else
+        return false;
+    
+    
 };
 app.use(express.static('static'));
 
