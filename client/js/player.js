@@ -21,7 +21,9 @@ Player.prototype.constructor = Player;
  * Automatically called by World.update
  **/
 
-
+Player.prototype.getPrevYCoordinates = function() {
+    return this.prevYCoordinates;
+}
 Player.prototype.update = function() {
 
     this.clear();

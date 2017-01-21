@@ -33,6 +33,7 @@ function preload() {
 function create() {
 	addTimeEvents();
 
+
 	socket = io.connect("https://fgj17-tatsiki.c9users.io", { query: "user=GAME" });
 
 	
@@ -70,6 +71,7 @@ function create() {
 	game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 	game.stage.disableVisibilityChange = true;
 	addDarknessMask();
+	game.time.events.loop(100, sendPlayerData.bind(this));
 }
 
 
@@ -95,6 +97,12 @@ function sendUpdates(){
 	datajson.curveFrequency = isCurveVarTarget;
 	datajson.updateTicker = updateTicker;
 	socket.emit("draw map", datajson);
+}
+
+function sendPlayerData() {
+	socket.emit("playerData", {
+		player1: player.getPrevYCoordinates()
+	});
 }
 
 
