@@ -1,0 +1,12 @@
+{
+  "name": "FGJ2017",
+  "version": "1.0.0",
+  "description": "FGJ",
+  "main": "server.js",
+  "author": "Yes",
+  "license": "ISC",
+  "devDependencies": {
+    "express": "^4.13.4",
+    "socket.io": "^1.4.5"
+  }
+}
