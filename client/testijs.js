@@ -18,6 +18,16 @@ function init() {
 	
 };
 
+function mockPositionData() {
+	setInterval(function () {
+		emitMap({
+        	"topWall" : Math.floor(Math.random()*(200-0+1)+0),
+        	"player1" : Math.floor(Math.random()*(400-201+1)+201),
+        	"bottomWall" : Math.floor(Math.random()*(700-401+1)+401),
+    	})
+	}, 100);
+}
+
 var setEventHandlers = function() {
 
 	//listen for socket events and set up the handler functions to deal with them.
@@ -26,12 +36,7 @@ var setEventHandlers = function() {
 	socket.on("newPowerUp", spawnNewPower);
 };
 
-function emitMapXY(x,y) {
-	data = {
-		x: x,
-		y: y
-	}
-	console.log(data);
+function emitMap(data) {
 	socket.emit("draw map", data);
 }
 
