@@ -76,7 +76,7 @@ function sendUpdates(){
 
 function sendPlayerData() {
 	socket.emit("playerData", {
-		player1: player.getPrevYCoordinates()
+		player1: player.getYPos()
 	});
 }
 
