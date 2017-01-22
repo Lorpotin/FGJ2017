@@ -3,22 +3,75 @@
 var messageArray = [];
 var imageArray = [];
 var textWarning = null;
+var middleObstacle = null;
 
 function onNewPowerUp(data){
-	warningMessage();	
-	powerUpMessage(data.nick + ": " + data.msg, powerUpMessage.bind(this,"Controls Inverted!",toggleInverted.bind(this, player.gameNumber,true)),-1000);
+	warningMessage();
+	if(data.powerup == 1){
+		powerUpMessage(data.nick + ": " + data.msg, powerUpMessage.bind(this,"Controls Inverted!",toggleInverted.bind(this, player.gameNumber,true)),-1000);
+	}
+	else if(data.powerup == 2){
+		powerUpMessage(data.nick + ": " + data.msg, powerUpMessage.bind(this,"Darkness...",toDarkness.bind(this, player.gameNumber)),-1000);
+	}
+	else if(data.powerup == 3){
+		powerUpMessage(data.nick + ": " + data.msg, powerUpMessage.bind(this,"Godspeed",toGodSpeed.bind(this, player.gameNumber)),-1000);
+	}
+	else if(data.powerup == 4){
+		powerUpMessage(data.nick + ": " + data.msg, powerUpMessage.bind(this,"Watch Out!",createObstacle.bind(this, player.gameNumber)),-1000);
+	}
+	
+}
+
+
+function createObstacle(num, toggleBool){
+	if(player.startedGame && player.gameNumber === num){
+		middleObstacle = game.add.graphics(GAME_WIDTH + 40,384);
+		middleObstacle.clear();
+		middleObstacle.anchor.set(0.5);
+		middleObstacle.beginFill(0xFFFFFF);
+		middleObstacle.drawRect(0, 0, 40, 40);
+
+	}
 }
 
 function toggleInverted(num, toggleBool){
-	
 	if(player.startedGame && player.gameNumber === num){
 		isInvertedVar = -isInvertedVar;
-		if(toggleBool){
-			powerUpMessage("Controls Inverted Again!",null,GAME_WIDTH+1000);	
+		if(toggleBool){	
 			game.time.events.add(6000, toggleInverted.bind(this,num,false));	
+		} else {
+			powerUpMessage("Controls Inverted Again!",null,GAME_WIDTH+1000);
+			extraScore += 50;
 		}
 	}
-	
+}
+
+function toGodSpeed(num){
+	if(player.startedGame && player.gameNumber === num){
+		tickerSpeed = 1;
+		game.time.events.add(6000, fromGodSpeed.bind(this,num,false));	
+	}
+}
+
+function fromGodSpeed(num){
+	if(player.startedGame && player.gameNumber === num){
+		tickerSpeed = 0.5;
+	}
+}
+
+function toDarkness(num, toggleBool){
+	if(player.startedGame && player.gameNumber === num){
+		isDarknessTarget = 1;
+		game.time.events.add(6000, fromDarkness.bind(this,num));	
+	}
+}
+
+function fromDarkness(num, toggleBool){
+	if(player.startedGame && player.gameNumber === num){
+		powerUpMessage("Light Again!",null,GAME_WIDTH+1000);	
+		isDarknessTarget = 0.5;
+		extraScore += 30;
+	}
 }
 
 function powerUpMessage(value,callback,target){
@@ -43,7 +96,6 @@ function onNewObstacle(data){
 	imageCounter++;
 	game.load.image("imageINC"+imageCounter, data.image);
 	game.load.start();
-	
 }
 
 function warningMessage(){
@@ -77,7 +129,7 @@ function fileComplete(progress, cacheKey, success, totalLoaded, totalFiles){
 			game.add.tween(this).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true,1000).onComplete.add(function(){
 				console.log(this,player.gameNumber,player.startedGame)
 				if(player.startedGame && player.gameNumber === this[0]){
-					extraScore  += 50;
+					extraScore  += 10;
 				}
 			},[player.gameNumber]);	
 		}.bind(obj))

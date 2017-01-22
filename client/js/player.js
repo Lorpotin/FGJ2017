@@ -109,16 +109,28 @@ Player.prototype.update = function() {
 
     var comparisionY = this.prevYCoordinates[this.prevYCoordinates.length-1] + this.y;
     if( comparisionY < upperLevelYCoord ||
-        comparisionY > lowerLevelYCoord){
+        comparisionY > lowerLevelYCoord ||
+        isObstacleHit() === true){
     	endGame();
         
     }
 };
 
+function isObstacleHit() {
+    var playerHead = player.prevYCoordinates[player.prevYCoordinates.length-1];
+    return
+        middleObstacle.x - 20 <  playerHead.x &&
+        middleObstacle.x + 20 >  playerHead.x &&
+        middleObstacle.y - 20 <  playerHead.y &&
+        middleObstacle.y + 20 >  playerHead.y
+        ;
+}
+
 function startGame() {
 	player.startedGame = true;
     player.gameNumber++;
     isInvertedVar = 1;
+    isDarknessTarget = 0.5;
 	startgameText.setText("");
     extraScore = 0;
 	starttime = Date.now();
@@ -133,5 +145,7 @@ function endGame() {
 	startgameText.setText("Move up or down to start the game");
 	starttime = null;
 	score = 0;
+    isInvertedVar = 1;
+    isDarknessTarget = 0.5;
 	player.y_move = 0;
 }
