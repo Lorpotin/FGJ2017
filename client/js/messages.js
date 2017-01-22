@@ -4,6 +4,7 @@ var messageArray = [];
 var imageArray = [];
 var textWarning = null;
 var middleObstacle = null;
+var middleObstacle2 = null;
 
 function onNewPowerUp(data){
 	warningMessage();
@@ -22,14 +23,35 @@ function onNewPowerUp(data){
 	
 }
 
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '0x';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
 
-function createObstacle(num, toggleBool){
+
+function createObstacle(num){
 	if(player.startedGame && player.gameNumber === num){
 		middleObstacle = game.add.graphics(GAME_WIDTH + 40,384);
 		middleObstacle.clear();
+		
+		middleObstacle.beginFill(getRandomColor());
+		middleObstacle.drawRect(0, 0,40,40);
+		middleObstacle.pivot.x = 20;
+		middleObstacle.pivot.y = 20;
 		middleObstacle.anchor.set(0.5);
-		middleObstacle.beginFill(0xFFFFFF);
-		middleObstacle.drawRect(0, 0,80,80);
+
+		 middleObstacle2 = game.add.graphics(GAME_WIDTH + 40,384);
+		 middleObstacle2.clear();
+		
+		 middleObstacle2.beginFill(getRandomColor());
+		 middleObstacle2.drawRect(0, 0,40,40);
+		 middleObstacle2.pivot.x = 20;
+		 middleObstacle2.pivot.y = 20;
+		 middleObstacle2.anchor.set(0.5);
 
 	}
 }

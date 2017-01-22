@@ -75,7 +75,7 @@ function setDarknessMask(){
 }
 
 function randomizeNewCurve(){
-	isCurveVarTarget = Math.random();
+	isCurveVarTarget = Math.random()  + 0.5;
 }
 
 function randomizeNewCurveSize(){
@@ -99,7 +99,7 @@ function updateLevel(){
     mapUpper.beginFill(0xF4A460);
 	mapUpper.moveTo(0, 0);
  	for(var x = 0; x < GAME_WIDTH+1000; x++){
- 		var y_pos = (230 + (100 * isCurveSize) + (200 * Math.sin(Math.PI * ((1-(x/40 + updateTicker))/60)))*isCurveVar);
+ 		var y_pos = (260 + (100 * isCurveSize) + (200 * Math.sin(Math.PI * ((1-(x/40 + updateTicker))/60)))*isCurveVar);
  		if(player && x === player.x){
  			upperLevelYCoord = y_pos;
  		}
@@ -114,7 +114,7 @@ function updateLevel(){
 	mapLower.moveTo(0, 1200);
  	for(var x = 0; x < GAME_WIDTH+1000; x++){
 	mapLower.beginFill(0xF4A460);
- 		var y_pos = (800 - (100 * isCurveSize) + (200 * Math.sin(Math.PI * (((x/40 + (updateTicker+60)))/60)))*isCurveVar);
+ 		var y_pos = (770 - (100 * isCurveSize) + (200 * Math.sin(Math.PI * (((x/40 + (updateTicker+60)))/60)))*isCurveVar);
  		if(player && x === player.x){
  		
  			lowerLevelYCoord = y_pos;
@@ -135,11 +135,22 @@ function updateLevel(){
 	
     if(middleObstacle){
     	middleObstacle.x -= tickerSpeed * 30;
-    	middleObstacle.y = (((150 + 384) * isCurveSize) + (200 * Math.sin(Math.PI * ((((middleObstacle.x/40) + (updateTicker+60)))/60)))*isCurveVar);
+    	middleObstacle.y = ((150 + 270) - (100* isCurveSize) + (200 * Math.sin(Math.PI * ((((middleObstacle.x/40) + (updateTicker+60)))/60)))*isCurveVar);
+    	middleObstacle.rotation += 0.05;
     	if(middleObstacle.x < -40){
     		middleObstacle.destroy();
     	}
     }
+    if( middleObstacle2){
+    	 middleObstacle2.x -= tickerSpeed * 30;
+    	 middleObstacle2.y = ((150 + 470) - (100* isCurveSize) + (200 * Math.sin(Math.PI * (((( middleObstacle2.x/40) + (updateTicker+60)))/60)))*isCurveVar);
+    	 middleObstacle2.rotation += 0.05;
+    	if( middleObstacle2.x < -40){
+    		 middleObstacle2.destroy();
+    	}
+    }
+
+
     
   } 
 

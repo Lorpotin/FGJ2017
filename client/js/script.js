@@ -71,6 +71,8 @@ function create() {
 	game.stage.disableVisibilityChange = true;
 	addDarknessMask();
 	game.time.events.loop(50, sendPlayerData.bind(this));
+
+	
 }
 
 

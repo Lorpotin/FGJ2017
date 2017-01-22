@@ -12,6 +12,7 @@ Player = function (game, x, y) {
     this.prevSpotY = 0;
     this.startedGame = false;
     this.gameNumber = 0;
+    this.anchor.set(0.5);
 };
 
 Player.prototype = Object.create(Phaser.Graphics.prototype);
@@ -106,22 +107,23 @@ Player.prototype.update = function() {
             this.y_move = 10;
         }
     }
-
     var comparisionY = this.prevYCoordinates[this.prevYCoordinates.length-1] + this.y;
     if( comparisionY < upperLevelYCoord ||
         comparisionY > lowerLevelYCoord ||
-        isObstacleHit() === true){
-    	endGame();
+        isObstacleHit(middleObstacle) === true ||
+        isObstacleHit(middleObstacle2) === true){
+        endGame();
         
     }
+    
 };
 
-function isObstacleHit() {
-    if(middleObstacle){
+function isObstacleHit(obj) {
+    if(obj){
         var playerHead = player.prevYCoordinates[player.prevYCoordinates.length-1];
-        var dx = (middleObstacle.x) - (player.x);
-        var dy = (middleObstacle.y) - (playerHead + player.y);
-        return Math.sqrt(dx * dx + dy * dy) < 100;
+        var dx = (obj.x) - (player.x)  - 200;
+        var dy = (obj.y) - (playerHead + player.y);
+        return Math.sqrt(dx * dx + dy * dy) < 30 ;
     } else {
         return false;
     }
@@ -146,7 +148,11 @@ function endGame() {
     if(middleObstacle){
         middleObstacle.destroy();
     }
+    if(middleObstacle2){
+        middleObstacle2.destroy();
+    }
 	player.startedGame = false;
+    tickerSpeed = 0.5;
 	startgameText.setText("Move up or down to start the game");
 	starttime = null;
 	score = 0;
