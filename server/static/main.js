@@ -15,6 +15,7 @@ $(document).ready(function() {
     var tickerSpeed = 1;
     var isCurveVarTarget = 1;
     var isCurveSizeTarget = 0;
+    var playerY = 0;
 
     var gameLoop = function(){
       draw();
@@ -81,8 +82,12 @@ $(document).ready(function() {
         ctx.lineTo(x,y_pos);
       }
       ctx.lineTo(1024+300 , 800);
-
       ctx.closePath();
+
+      if (playerY > 0) {
+        ctx.fillStyle = "#f71313";
+        ctx.fillRect(480, playerY, 10, 10);
+      }
      }
 
  
@@ -123,7 +128,9 @@ $(document).ready(function() {
         });
         socket.on('drawMap', drawMap);
         socket.on('gameDisconnected', handleGameDisconnect);
+        socket.on('playerPositions', drawPlayer);
         socket.on('eventActive', eventActive);
+        socket.on('playerDead', playerDied);
 
 
         $(".btn").click(function() {
@@ -165,9 +172,18 @@ $(document).ready(function() {
         
     }
 
+    var drawPlayer = function(data) {
+        playerY = data.player1 + (384*(768/1080));
+    }
+
+    var playerDied = function() {
+        console.log('död');
+    }
+
     var handleGameDisconnect = function() {
         $("#header").text("Game offline");
         gameLive = false;
+        playerY = 0;
     };
 
     var spawnEvent = function(powerup, msg) {

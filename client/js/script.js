@@ -25,6 +25,9 @@ var highscoreText;
 var startgameText;
 
 var messageArray = [];
+var particleArray = [];
+
+var isInvertedVar = 1;
 
 function preload() {
 }
@@ -34,6 +37,18 @@ function create() {
 
 
 	socket = io.connect("https://fgj17-tatsiki.c9users.io", { query: "user=GAME" });
+
+	
+	background = game.add.graphics(0,0);
+	background.beginFill( 0X808080, 1);
+	background.drawRect(0, 0, 1920, 1080);
+		for(var i = 0; i < 10; i++){
+		var obj = game.add.graphics(GAME_WIDTH + 1000 * Math.random(),1080 * Math.random());
+		obj.clear();
+		obj.beginFill(0xFFFFFF);
+		obj.drawRect(0, 0, 40, 10);
+		particleArray.push(obj);
+	}
     mapLower = game.add.graphics(0,0);
     mapUpper = game.add.graphics(0,0);
     scoreText = game.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#FFF' });
@@ -41,7 +56,7 @@ function create() {
     startgameText = game.add.text(300, 500, 'Move up or down to start the game', { fontSize: '32px', fill: '#FFF' });
 	player = new Player(game,512,384);
     game.add.existing(player);
-
+	
     darknessMask = game.add.graphics(0,0);
     darknessMask.alpha = 0;
  	game.load.onFileComplete.add(fileComplete, this);
@@ -54,8 +69,8 @@ function create() {
     socket.on("image", onNewObstacle);
 	game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 	game.stage.disableVisibilityChange = true;
-	game.time.events.loop(100, sendPlayerData.bind(this));
-
+	addDarknessMask();
+	game.time.events.loop(50, sendPlayerData.bind(this));
 }
 
 
@@ -64,6 +79,15 @@ function update() {
 	updateTicker+=tickerSpeed;
 	updateLevel();
 	updateScore();
+	for(var i = 0; i < particleArray.length; i++){
+		particleArray[i].x -= 100;
+		if(particleArray[i].x < 0){
+			particleArray[i].width = 2 + (2*Math.random());
+			particleArray[i].height = 1;
+			particleArray[i].x = GAME_WIDTH + 1000 * Math.random();
+			particleArray[i].y = 1080 * Math.random();
+		}
+	}
 }
 
 function sendUpdates(){
@@ -76,8 +100,12 @@ function sendUpdates(){
 
 function sendPlayerData() {
 	socket.emit("playerData", {
-		player1: player.getPrevYCoordinates()
+		player1: player.getYPos()
 	});
+}
+
+function sendGameOver() {
+	socket.emit("gameOver");
 }
 
 
