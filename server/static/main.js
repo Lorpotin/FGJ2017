@@ -84,8 +84,10 @@ $(document).ready(function() {
       ctx.lineTo(1024+300 , 800);
       ctx.closePath();
 
-      ctx.fillStyle = "#FFFFFF";
-      ctx.fillRect(10,10,10,10);
+      if (playerY > 0) {
+        ctx.fillStyle = "#f71313";
+        ctx.fillRect(480, playerY, 10, 10);
+      }
      }
 
  
@@ -128,6 +130,7 @@ $(document).ready(function() {
         socket.on('gameDisconnected', handleGameDisconnect);
         socket.on('playerPositions', drawPlayer);
         socket.on('eventActive', eventActive);
+        socket.on('playerDead', playerDied);
 
 
         $(".btn").click(function() {
@@ -170,11 +173,17 @@ $(document).ready(function() {
     }
 
     var drawPlayer = function(data) {
+        playerY = data.player1 + (384*(768/1080));
+    }
+
+    var playerDied = function() {
+        console.log('död');
     }
 
     var handleGameDisconnect = function() {
         $("#header").text("Game offline");
         gameLive = false;
+        playerY = 0;
     };
 
     var spawnEvent = function(powerup, msg) {

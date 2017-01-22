@@ -10,7 +10,7 @@ var WEB_SOCKETS, GAME_SOCKETS;
 
 var darkEvent, xEvent, yEvent;
 var eventStatus;
-var count = 5;
+var count = 10;
 var counter;
 
 function init()  {
@@ -45,6 +45,7 @@ function onSocketConnection(client) {
     client.on("draw map", drawMap);
     client.on("image", processImage);
     client.on("playerData", playerData);
+    client.on("gameOver", playerDead);
 };
 
 function onClientDisconnect(client) {
@@ -85,7 +86,7 @@ function spawnNewPowur(data) {
         console.log(data);
         eventStatus = true;
         socket.emit("newPowerUp", data);
-        count = 5;
+        count = 10;
         calculateEventTimer();
     }
     else {
@@ -103,6 +104,10 @@ function playerData(data) {
 
 function calculateEventTimer(data) {
     counter = setInterval(timer, 1000);
+}
+
+function playerDead() {
+    socket.emit("playerDead");
 }
 
 function timer() {

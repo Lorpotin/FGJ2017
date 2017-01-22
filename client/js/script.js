@@ -70,7 +70,7 @@ function create() {
 	game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 	game.stage.disableVisibilityChange = true;
 	addDarknessMask();
-	game.time.events.loop(100, sendPlayerData.bind(this));
+	game.time.events.loop(50, sendPlayerData.bind(this));
 }
 
 
@@ -102,6 +102,10 @@ function sendPlayerData() {
 	socket.emit("playerData", {
 		player1: player.getYPos()
 	});
+}
+
+function sendGameOver() {
+	socket.emit("gameOver");
 }
 
 

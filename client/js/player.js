@@ -148,4 +148,5 @@ function endGame() {
     isInvertedVar = 1;
     isDarknessTarget = 0.5;
 	player.y_move = 0;
+    sendGameOver();
 }
