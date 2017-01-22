@@ -117,13 +117,15 @@ Player.prototype.update = function() {
 };
 
 function isObstacleHit() {
-    var playerHead = player.prevYCoordinates[player.prevYCoordinates.length-1];
-    return
-        middleObstacle.x - 20 <  playerHead.x &&
-        middleObstacle.x + 20 >  playerHead.x &&
-        middleObstacle.y - 20 <  playerHead.y &&
-        middleObstacle.y + 20 >  playerHead.y
-        ;
+    if(middleObstacle){
+        var playerHead = player.prevYCoordinates[player.prevYCoordinates.length-1];
+        var dx = (middleObstacle.x) - (player.x);
+        var dy = (middleObstacle.y) - (playerHead + player.y);
+        return Math.sqrt(dx * dx + dy * dy) < 100;
+    } else {
+        return false;
+    }
+    
 }
 
 function startGame() {
@@ -141,6 +143,9 @@ function endGame() {
 		y_pos = ((100 * isCurveSize) + (200 * Math.sin(Math.PI * (((y/49 + (updateTicker-45)))/60)))*isCurveVar);
 		player.prevYCoordinates[y] = y_pos;
 	}
+    if(middleObstacle){
+        middleObstacle.destroy();
+    }
 	player.startedGame = false;
 	startgameText.setText("Move up or down to start the game");
 	starttime = null;

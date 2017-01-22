@@ -135,7 +135,7 @@ function updateLevel(){
 	
     if(middleObstacle){
     	middleObstacle.x -= tickerSpeed * 30;
-    	middleObstacle.y = (((150 + 450) * isCurveSize) + (200 * Math.sin(Math.PI * ((((middleObstacle.x/40) + (updateTicker+60)))/60)))*isCurveVar);
+    	middleObstacle.y = (((150 + 384) * isCurveSize) + (200 * Math.sin(Math.PI * ((((middleObstacle.x/40) + (updateTicker+60)))/60)))*isCurveVar);
     	if(middleObstacle.x < -40){
     		middleObstacle.destroy();
     	}

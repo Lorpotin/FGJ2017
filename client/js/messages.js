@@ -29,7 +29,7 @@ function createObstacle(num, toggleBool){
 		middleObstacle.clear();
 		middleObstacle.anchor.set(0.5);
 		middleObstacle.beginFill(0xFFFFFF);
-		middleObstacle.drawRect(0, 0, 40, 40);
+		middleObstacle.drawRect(0, 0,80,80);
 
 	}
 }
