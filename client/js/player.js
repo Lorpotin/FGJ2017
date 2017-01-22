@@ -134,4 +134,5 @@ function endGame() {
 	starttime = null;
 	score = 0;
 	player.y_move = 0;
+    sendGameOver();
 }

@@ -130,6 +130,7 @@ $(document).ready(function() {
         socket.on('gameDisconnected', handleGameDisconnect);
         socket.on('playerPositions', drawPlayer);
         socket.on('eventActive', eventActive);
+        socket.on('playerDead', playerDied);
 
 
         $(".btn").click(function() {
@@ -172,7 +173,11 @@ $(document).ready(function() {
     }
 
     var drawPlayer = function(data) {
-        playerY = data.player1 + 384;
+        playerY = data.player1 + (384*(768/1080));
+    }
+
+    var playerDied = function() {
+        console.log('död');
     }
 
     var handleGameDisconnect = function() {
