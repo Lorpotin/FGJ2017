@@ -80,7 +80,7 @@ function update() {
 	updateLevel();
 	updateScore();
 	for(var i = 0; i < particleArray.length; i++){
-		particleArray[i].x -= 100;
+		particleArray[i].x -= 100*tickerSpeed;
 		if(particleArray[i].x < 0){
 			particleArray[i].width = 2 + (2*Math.random());
 			particleArray[i].height = 1;
