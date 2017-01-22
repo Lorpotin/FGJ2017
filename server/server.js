@@ -10,7 +10,7 @@ var WEB_SOCKETS, GAME_SOCKETS;
 
 var darkEvent, xEvent, yEvent;
 var eventStatus;
-var count = 10;
+var count = 6;
 var counter;
 
 function init()  {
@@ -86,7 +86,7 @@ function spawnNewPowur(data) {
         console.log(data);
         eventStatus = true;
         socket.emit("newPowerUp", data);
-        count = 10;
+        count = 6;
         calculateEventTimer();
     }
     else {
