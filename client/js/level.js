@@ -132,7 +132,16 @@ function updateLevel(){
     	darknessMask.x = player.x ;
     	darknessMask.y = player.y + player.prevYCoordinates[player.prevYCoordinates.length-1];
     }
-}
+	
+    if(middleObstacle){
+    	middleObstacle.x -= tickerSpeed * 30;
+    	middleObstacle.y = (((150 + 384) * isCurveSize) + (200 * Math.sin(Math.PI * ((((middleObstacle.x/40) + (updateTicker+60)))/60)))*isCurveVar);
+    	if(middleObstacle.x < -40){
+    		middleObstacle.destroy();
+    	}
+    }
+    
+  } 
 
 function addTimeEvents(){
 	game.time.events.loop(4000, randomizeNewCurve.bind(this));

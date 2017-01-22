@@ -16,6 +16,7 @@ $(document).ready(function() {
     var isCurveVarTarget = 1;
     var isCurveSizeTarget = 0;
     var playerY = 0;
+    var isDead = false;
 
     var gameLoop = function(){
       draw();
@@ -87,6 +88,12 @@ $(document).ready(function() {
       if (playerY > 0) {
         ctx.fillStyle = "#f71313";
         ctx.fillRect(480, playerY, 10, 10);
+      }
+
+      if (isDead) {
+        ctx.fillStyle = "#f23a3a";
+        ctx.font = "bold 192px Arial";
+        ctx.fillText("DÖD", 320, 420);
       }
      }
 
@@ -177,7 +184,8 @@ $(document).ready(function() {
     }
 
     var playerDied = function() {
-        console.log('död');
+        isDead = true;
+        setTimeout(function(){ isDead = false; }, 3000);
     }
 
     var handleGameDisconnect = function() {
